@@ -631,8 +631,11 @@ a.ui-button:active,
 
 
 #donate-main .container {
-  background: #fff;
   color: #333;
+}
+
+#donate-main.donate {
+  position: relative;
 }
 
 #donate-main .container > h2 {
@@ -657,6 +660,7 @@ a.ui-button:active,
 .form-container {
   max-width: 1250px;
 }
+
 
 .donation-payment-form {
   /* display: grid;
@@ -957,6 +961,32 @@ a.ui-button:active,
 .donation-form.billing-info > button {
   grid-column: 1 / span 2; 
   margin-top: 18px;
+}
+
+/* Overlay */
+.maintenance-txt {
+  position: absolute;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-size: 2rem;
+  width: 100%;
+  color: #fff;
+  z-index: 1;
+}
+
+#donate-main.donate::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-color);
+  opacity: 0.9;
+  z-index: 1;
 }
 
 
