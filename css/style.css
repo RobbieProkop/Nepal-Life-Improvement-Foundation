@@ -102,7 +102,7 @@ img {
 /* Header */
 
 .hero {
-  background: url('../img/mountain-1.jpeg') no-repeat center center/cover;
+  background: url('../img/mountain-1.jpg') no-repeat center center/cover;
   height: 100vh;
   position: relative;
   color: #fff;
@@ -249,7 +249,7 @@ img {
 }
 
 .gal-6 {
-  background: url('../img/mountain-3.jpeg') center center/cover;
+  background: url('../img/mountain-3.jpg') center center/cover;
   background-size: cover;
   grid-column: 3 / span 2;
 }
@@ -1001,22 +1001,20 @@ a.ui-button:active,
 .team .flex-items > div {
   padding-top: 0 ;
 }
-.team .section-header {
-  margin-bottom: -4rem;
-}
+
 .team img {
   max-width: 350px;
   max-height: 350px;
   border-radius: 50%;
 }
 
-.team .flex-items .president {
+/* .team .flex-items .president {
   margin-right: 7rem;
 }
 
 .team .flex-items .vp {
   margin-left: 7rem;
-}
+} */
 
 .team .flex-items h4 {
   font-size: 1.4rem;
