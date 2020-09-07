@@ -32,18 +32,55 @@
 .dn-btn.btn {
   color: #fff;
   border: none;
-  padding: 15px 0 
+  padding: 15px 0;
 }
 
-.bg-dark { 
-  background: var(--dark-color); 
+.card {
+  background: #fff;
+  padding: 1rem;
+}
+
+.category {
+  display: inline-block;
+  color: #fff;
+  font-size: 0.55rem;
+  text-transform: uppercase;
+  padding: 0.4rem 0.6rem;
+  border-radius: 15px;
+  margin-bottom: 0.5rem;
+  max-width: 6rem;
+  text-align: center;
+}
+.category-inf {
+  background: var(--bg-light);
+}
+.category-hea {
+  background: var(--secondary-color);
+}
+.category-gen {
+  background: var(--fourth-color);
+}
+
+.bg-dark {
+  background: var(--dark-color);
   color: #fff;
 }
 
 .bg-light {
-  background: var(--light-color);
+  background: var(--bg-light);
 }
 
+.bg-secondary {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+.py-1 {
+  padding: 1rem 0;
+}
+.py-2 {
+  padding: 1rem 0;
+}
 
 /* About icons */
 .flex-items {
@@ -87,7 +124,6 @@
 .flex-columns .column .column-1 {
   line-height: 0;
 }
-
 
 .flex-columns .column .column-1,
 .flex-columns .column .column-2 {
@@ -137,7 +173,7 @@
 }
 
 .section-padding {
-  padding:20px 20px 0;
+  padding: 20px 20px 0;
 }
 .section-margin {
   margin-top: 4rem;
@@ -165,8 +201,3 @@
 }
 
 /* Donation */
-
-
-
-
-
