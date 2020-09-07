@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Raleway&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
-:root{
-
+:root {
   --primary-color: #057389;
   --secondary-color: #9dbc40;
   --third-color: #b1d1ed;
@@ -21,9 +20,8 @@
   box-sizing: border-box;
 }
 
-
 body {
-  font-family: 'Raleway', sans-serif;
+  font-family: "Raleway", sans-serif;
   background: #fff;
   color: #333;
   line-height: 1.6;
@@ -38,24 +36,26 @@ a {
   color: #333;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: 300;
   line-height: 1.2;
 }
 
-h3, h4 {
+h3,
+h4 {
   font-weight: 250;
 }
 
 p {
-  margin: .7rem 0;
+  margin: 0.7rem 0;
 }
 
 img {
   width: 100%;
 }
-
-
 
 /* Navbar */
 .navbar {
@@ -69,7 +69,6 @@ img {
   top: 0;
   width: 100%;
   height: 60px;
-
 }
 
 .navbar ul {
@@ -78,7 +77,7 @@ img {
 
 .navbar a {
   color: #fff;
-  padding: .6rem 1.25rem;
+  padding: 0.6rem 1.25rem;
   margin: 0 5px;
 }
 
@@ -87,12 +86,12 @@ img {
 }
 
 .navbar a:hover {
-  border-bottom: #fff 2px solid;  
+  border-bottom: #fff 2px solid;
 }
 
 .menu-wrap .toggler {
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   width: 1px;
   height: 1px;
@@ -102,13 +101,12 @@ img {
 /* Header */
 
 .hero {
-  background: url('../img/mountain-1.jpg') no-repeat center center/cover;
+  background: url("../img/mountain-1.jpg") no-repeat center center/cover;
   height: 100vh;
   position: relative;
   color: #fff;
   z-index: 1;
 }
-
 
 .hero.stories {
   margin-bottom: 4rem;
@@ -131,7 +129,7 @@ img {
 
 .hero.donate-now {
   background: var(--third-color);
-  height: 30vh
+  height: 30vh;
 }
 
 .hero .content h1 {
@@ -161,25 +159,27 @@ img {
 }
 
 .hero.stories::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .hero.blog {
-  background: url('../img/Nepal/villager-workers-2.jpg') no-repeat center center/cover;
+  background: url("../img/Nepal/villager-workers-2.jpg") no-repeat center
+    center/cover;
 }
 
-.hero.blog .content h1{
+.hero.blog .content h1 {
   font-size: 3rem;
   margin-top: -3rem;
+  margin-bottom: 2rem;
 }
 
-.hero.blog .content .btn{
+.hero.blog .content .btn {
   background: var(--bg-light);
 }
 
@@ -212,64 +212,62 @@ img {
 
 .flex-columns .column .btn {
   border: 1px solid #fff;
-  margin-top: .8rem;
+  margin-top: 0.8rem;
 }
 
 .about .btn-about {
   padding: 12px 20px;
 }
 
-
 /* Gallery */
 
 .gal-1 {
-  background: url('../img/mountain-4.jpg') center center/cover;
+  background: url("../img/mountain-4.jpg") center center/cover;
   background-size: cover;
-  grid-column: 1 / span 2;  
+  grid-column: 1 / span 2;
 }
 
 .gal-2 {
-  background: url('../img/Nepal/villager-workers.jpg') center center/cover;
+  background: url("../img/Nepal/villager-workers.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-3 {
-  background: url('../img/Nepal/villagers-4.jpg') center center / cover;
+  background: url("../img/Nepal/villagers-4.jpg") center center / cover;
   background-size: cover;
 }
 
 .gal-4 {
-  background: url('../img/Nepal/villagers-boys.jpg') top center;
+  background: url("../img/Nepal/villagers-boys.jpg") top center;
   background-size: cover;
 }
 
 .gal-5 {
-  background: url('../img/Nepal/mountain-village.jpg') center center/cover;
+  background: url("../img/Nepal/mountain-village.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-6 {
-  background: url('../img/mountain-3.jpg') center center/cover;
+  background: url("../img/mountain-3.jpg") center center/cover;
   background-size: cover;
   grid-column: 3 / span 2;
 }
 
 .gal-7 {
-  background: url('../img/Nepal/buddha.jpg') center center/cover;
+  background: url("../img/Nepal/buddha.jpg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-8 {
-  background: url('../img/Nepal/monks.jpg') center center/cover;
+  background: url("../img/Nepal/monks.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-9 {
-  background: url('../img/Nepal/temple-2.jpg') center center/cover;
+  background: url("../img/Nepal/temple-2.jpg") center center/cover;
   background-size: cover;
 }
-
 
 .photos img:hover {
   opacity: 0.7;
@@ -278,7 +276,6 @@ img {
 /* Stories */
 #stories-main {
   background: var(--dark-color);
-  
 }
 .blog .column .column-2 {
   background: var(--bg-light);
@@ -294,10 +291,8 @@ img {
   max-height: 600px;
 }
 
-
-
 /* Donation */
-  /* 1 - Payment Amount */
+/* 1 - Payment Amount */
 /* #donate-main .container {
   background: #fff;
   color: #333;
@@ -455,7 +450,7 @@ a.ui-button:active,
 .dn-f > span {
   padding: 10px; 
   margin-left: 10px;
-} */ 
+} */
 
 /* Checkbox Radio Donation Amount */
 
@@ -627,8 +622,7 @@ a.ui-button:active,
 } */
 
 /* Donation */
-  /* 1 - Payment Amount */
-
+/* 1 - Payment Amount */
 
 #donate-main .container {
   color: #333;
@@ -639,7 +633,7 @@ a.ui-button:active,
 }
 
 #donate-main .container > h2 {
-  display: flex; 
+  display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -647,9 +641,8 @@ a.ui-button:active,
   font-size: 3rem;
 }
 
-
 #donate .container > h2 {
-  display: flex; 
+  display: flex;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -660,7 +653,6 @@ a.ui-button:active,
 .form-container {
   max-width: 1250px;
 }
-
 
 .donation-payment-form {
   /* display: grid;
@@ -679,7 +671,7 @@ a.ui-button:active,
 }
 
 .donation-header > h3 {
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   font-size: 1.3rem;
 }
 
@@ -687,7 +679,7 @@ a.ui-button:active,
   background: #fff;
   color: #333;
   padding: 2px 8px 5px;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
   border-radius: 50%;
 }
 
@@ -695,16 +687,16 @@ a.ui-button:active,
   display: grid;
   border: 2px solid var(--primary-color);
   color: #333;
-  padding: 1rem; 
+  padding: 1rem;
   max-width: 446px;
 }
 
 .donation-form > * {
-  margin: .5rem 0;
+  margin: 0.5rem 0;
 }
 
 /* Select Menu */
-.ui-widget{
+.ui-widget {
   font-family: Roboto, sans-serif !important;
 }
 
@@ -731,7 +723,7 @@ a.ui-button:active,
 }
 
 .ui-selectmenu-button.ui-button:hover {
-  color: #333!important;
+  color: #333 !important;
 }
 .ui-state-active,
 .ui-widget-content .ui-state-active,
@@ -739,14 +731,14 @@ a.ui-button:active,
 a.ui-button:active,
 .ui-button:active,
 .ui-button.ui-state-active:hover {
-	border: 1px solid var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
   background: var(--primary-color) !important;
   color: #fff !important;
   opacity: 0.6;
 }
 .ui-icon-background,
 .ui-state-active .ui-icon-background {
-	border: var(--primary-color) !important;
+  border: var(--primary-color) !important;
 }
 
 :focus {
@@ -755,9 +747,9 @@ a.ui-button:active,
 }
 
 .ui-selectmenu-button.ui-button {
-	text-align: left;
-	white-space: nowrap;
-	width: 70%;
+  text-align: left;
+  white-space: nowrap;
+  width: 70%;
 }
 
 .ui-menu .ui-menu-item-wrapper:hover {
@@ -790,13 +782,13 @@ a.ui-button:active,
 }
 
 .dn-f > span {
-  padding: 10px; 
+  padding: 10px;
   margin-left: 10px;
 }
 
 /* Checkbox Radio Donation Amount */
 
-.donation-am  {
+.donation-am {
   font-size: 20px;
   font-family: Roboto, sans-serif;
   border: none;
@@ -825,14 +817,13 @@ a.ui-button:active,
 }
 .ui-checkboxradio-radio-label .ui-icon-background {
   display: none;
-} 
+}
 
 .donation-am .ui-button {
   background: var(--primary-color);
   color: #fff;
   margin-right: 0;
 }
-
 
 .donation-am .ui-button:hover {
   background: var(--primary-color);
@@ -846,8 +837,8 @@ a.ui-button:active,
 .ui-widget-content .ui-state-focus,
 .ui-widget-header .ui-state-focus,
 .ui-button:hover,
-.ui-button:focus { 
-	color: #fff;
+.ui-button:focus {
+  color: #fff;
 }
 .select-other {
   display: grid;
@@ -877,13 +868,13 @@ a.ui-button:active,
   grid-column: 1 / span 3;
 }
 
- .donation-payment-cc-exp .cvc-h4 {
+.donation-payment-cc-exp .cvc-h4 {
   display: grid;
   grid-column: 4 / span 1;
   grid-row: 1 / span 1;
-} 
+}
 
- .donation-payment-cc-exp .exp-sel-day {
+.donation-payment-cc-exp .exp-sel-day {
   display: grid;
   grid-column: 1 / span 1;
 }
@@ -904,18 +895,17 @@ a.ui-button:active,
 .donation-payment-cc-exp .cvc {
   display: grid;
   grid-column: 4 / span 4;
-} 
+}
 
-#cc-exp-day, #cc-exp-month {
+#cc-exp-day,
+#cc-exp-month {
   border: 1px solid var(--primary-color);
-  
 }
 
 /* 3 - Address */
 .donation-form.billing-info > input {
   padding-left: 2px;
 }
-
 
 .donation-form.billing-info {
   display: grid;
@@ -936,7 +926,7 @@ a.ui-button:active,
 }
 
 .donation-text-checkbox {
-  grid-column: 1 /span 2;
+  grid-column: 1 / span 2;
   font-size: 14px;
   margin-bottom: 0;
 }
@@ -951,22 +941,20 @@ a.ui-button:active,
   margin-right: 15px;
 }
 
-
-
 .donation-text-checkbox .checkbox {
   font-weight: 600;
   font-style: italic;
 }
 
 .donation-form.billing-info > button {
-  grid-column: 1 / span 2; 
+  grid-column: 1 / span 2;
   margin-top: 18px;
 }
 
 /* Overlay */
 .maintenance-txt {
   position: absolute;
-  display: flex; 
+  display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -978,7 +966,7 @@ a.ui-button:active,
 }
 
 #donate-main.donate::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -989,8 +977,6 @@ a.ui-button:active,
   z-index: 1;
 }
 
-
-
 /* Team */
 .founders {
   margin-top: 3rem;
@@ -999,7 +985,7 @@ a.ui-button:active,
   background: var(--light-color);
 }
 .team .flex-items > div {
-  padding-top: 0 ;
+  padding-top: 0;
 }
 
 .team img {
@@ -1052,7 +1038,7 @@ a.ui-button:active,
   padding-left: 10px;
   height: 2.5rem;
   border: none;
-  font-size: 1rem; 
+  font-size: 1rem;
 }
 
 .contact-form input:focus {
@@ -1078,11 +1064,47 @@ a.ui-button:active,
   color: #fff;
   border: #fff solid 1px;
   height: 3rem;
+  width: 100%;
   padding: 4px;
   font-weight: 400;
   font-size: 1.3rem;
 }
 
+/* Projects */
+#project-articles {
+  background: #e4e4e4;
+}
+#project-articles .container {
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 0 2rem;
+  overflow: hidden;
+}
+
+/* Home Articles */
+#project-articles .articles-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1rem;
+}
+
+#project-articles .articles-container > *:first-child,
+#project-articles .articles-container > *:last-child {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  align-items: center;
+  grid-column: 1 / span 2;
+}
+
+#project-articles .articles-container > *:last-child {
+  grid-column: 2 / span 2;
+}
+
+#project-articles .articles-container .card-center {
+  display: grid;
+  align-items: center;
+}
 /* Footer */
 #footer {
   display: flex;
@@ -1112,6 +1134,3 @@ a.ui-button:active,
 #footer .links p {
   font-size: 8px;
 }
-
-
-
