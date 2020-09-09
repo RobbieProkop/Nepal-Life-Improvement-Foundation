@@ -220,6 +220,16 @@ img {
   padding: 12px 20px;
 }
 
+/* Focus */
+.focus {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.focus .column .column-2 .btn {
+  border: 1px solid #fff;
+  background: var(--primary-color);
+}
 /* Gallery */
 
 .gal-1 {
