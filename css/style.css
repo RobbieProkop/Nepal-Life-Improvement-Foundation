@@ -1041,20 +1041,17 @@ a.ui-button:active,
   padding: 1.2rem 0;
 }
 
-.contact-form label {
-  display: block;
-  margin-bottom: 5px;
-}
-
 .contact-form .form-control {
   margin-bottom: 1rem;
 }
 
 .contact-form input {
+  display: block;
   background: #fff;
   width: 100%;
   padding: 4px;
   padding-left: 10px;
+  margin-bottom: 1rem;
   height: 2.5rem;
   border: none;
   font-size: 1rem;
