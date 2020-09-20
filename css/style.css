@@ -1028,8 +1028,16 @@ a.ui-button:active,
   color: #fff;
   margin-top: 3rem;
 }
-.contact-form {
+
+#contact .column-2 > form {
   width: 70%;
+}
+
+#contact .column-2 .btn-contact {
+  width: 100%;
+}
+.contact-form {
+  width: 100%;
   padding: 1.2rem 0;
 }
 
