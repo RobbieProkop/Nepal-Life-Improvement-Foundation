@@ -239,12 +239,12 @@ img {
 }
 
 .gal-2 {
-  background: url("../img/Nepal/villager-workers.jpg") center center/cover;
+  background: url("../img/Nepal/villager-workers-crop.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-3 {
-  background: url("../img/Nepal/villagers-4.jpg") center center / cover;
+  background: url("../img/Nepal/villagers-4-crop.jpg") center center / cover;
   background-size: cover;
 }
 
@@ -265,13 +265,13 @@ img {
 }
 
 .gal-7 {
-  background: url("../img/Nepal/buddha.jpg") center center/cover;
+  background: url("../img/Nepal/buddha-crop.jpg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-8 {
-  background: url("../img/Nepal/monks.jpg") center center/cover;
+  background: url("../img/Nepal/monks-crop.jpg") center center/cover;
   background-size: cover;
 }
 
