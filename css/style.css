@@ -1075,7 +1075,7 @@ a.ui-button:active,
   outline: none;
 }
 
-.contact-form .btn-contact {
+.contact-form > button {
   background: var(--secondary-color);
   color: #fff;
   border: #fff solid 1px;
@@ -1084,6 +1084,10 @@ a.ui-button:active,
   padding: 4px;
   font-weight: 400;
   font-size: 1.3rem;
+  cursor: pointer;
+  display: inline-block;
+  border-radius: 5px;
+  letter-spacing: 1px;
 }
 
 /* Projects */
