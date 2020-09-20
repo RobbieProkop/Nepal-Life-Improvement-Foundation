@@ -588,21 +588,12 @@ facing hardship due merely to the circumstances of their birth</p>
               <form method="POST" data-netlify="true" data-netlify-recaptcha="true">
                 <div class="contact-form">
                   <div class="form-control">
-                    <label for="name"></label>
-                    <input type="text" name="name" id="name" placeholder="Name">
+                    <input type="text" name="name" class="name" placeholder="Name">
+                    <input type="text" name="email" class="email" placeholder="Email">
+                    <input type="text" name="phone" class="phone" placeholder="Phone">
+                    <textarea name="message" class="subject" placeholder="Write a Message"></textarea>
                   </div>
-                  <div class="form-control">
-                    <label for="email"></label>
-                    <input type="text" name="email" id="email" placeholder="Email">
-                  </div>
-                  <div class="form-control">
-                    <label for="phone"></label>
-                    <input type="text" name="phone" id="phone" placeholder="Phone">
-                  </div>
-                  <div class="form-control message">
-                    <label for="message"></label>
-                    <textarea name="message" id="subject" placeholder="Write a Message"></textarea>
-                  </div>
+                  
                   <div class="field">
                     <div data-netlify-recaptcha="true"></div>
                   </div>
