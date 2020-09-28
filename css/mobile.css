@@ -10,7 +10,7 @@
 
 .menu-wrap .toggler {
   position: absolute;
-  top:0;
+  top: 0;
   right: 0;
   z-index: 2;
   cursor: pointer;
@@ -51,7 +51,7 @@
 
 .menu-wrap .hamburger > div:before,
 .menu-wrap .hamburger > div:after {
-  content: '';
+  content: "";
   position: absolute;
   z-index: 1;
   top: -10px;
@@ -82,7 +82,7 @@
 }
 
 /* SHow Menu */
-.menu-wrap .toggler:checked ~ .menu{
+.menu-wrap .toggler:checked ~ .menu {
   visibility: visible;
 }
 
@@ -91,8 +91,8 @@
   transition-duration: 0.75s;
 }
 
-.menu-wrap .toggler:checked ~ .menu > div >div {
-  opacity: 1; 
+.menu-wrap .toggler:checked ~ .menu > div > div {
+  opacity: 1;
   transition: opacity 0.4s ease 0.4s;
 }
 
@@ -138,7 +138,7 @@
 }
 
 .navbar ul li {
-  padding: .5rem;
+  padding: 0.5rem;
   color: #fff;
 }
 
@@ -156,7 +156,6 @@
   justify-content: center;
 }
 
-
 .donation-form {
   min-width: 446px;
 }
@@ -165,27 +164,26 @@
   margin: 10px 0;
 }
 
-
-@media(max-width: 768px) {
-
+@media (max-width: 768px) {
   /* icons */
   .flex-items {
     flex-direction: column;
     margin-right: 0;
   }
 
-  .flex-items .icons > img{
+  .flex-items .icons > img {
     margin-top: 10px;
   }
 
   /* Why We Started & Stories */
-  .flex-columns .row, .flex-columns.flex-reverse .row {
+  .flex-columns .row,
+  .flex-columns.flex-reverse .row {
     display: flex;
     flex-direction: column;
     max-width: 100%;
   }
 
-  .flex-columns .column-2  {
+  .flex-columns .column-2 {
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -203,23 +201,21 @@
   }
 
   .gal-4 {
-    background: url('../img/mountain-3.jpeg') center center;
+    background: url("../img/Nepal/begnas-lake.jpg") top center;
     background-size: cover;
     grid-column: 1 / span 2;
   }
-  
+
   .gal-5 {
-    background: url('../img/Nepal/villagers-boys.jpg') center center/cover;
+    background: url("../img/Nepal/bandipur.jpg") center center/cover;
     background-size: cover;
   }
-  
+
   .gal-6 {
-    background: url('../img/Nepal/mountain-village.jpg') center center/cover;
+    background: url("../img/mountain-3.jpg") center center/cover;
     background-size: cover;
     grid-column: 2 / span 1;
   }
-
-  
 
   /* Founders */
 
@@ -228,7 +224,7 @@
   }
 
   .team img {
-    width: 70%
+    width: 70%;
   }
 
   .team .flex-items .president {
@@ -243,11 +239,10 @@
 /* Footer */
 
 #footer p {
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
-@media(max-width: 414px) {
-
+@media (max-width: 414px) {
   .navbar {
     padding: 0;
   }
@@ -275,7 +270,6 @@
   .donation-form {
     min-width: 200px;
     max-width: 320px;
-
   }
 
   .dn-f {
@@ -306,7 +300,7 @@
   }
 }
 
-@media(max-width: 320px) {
+@media (max-width: 320px) {
   .hero .content h1 {
     font-size: 2.5rem;
   }
@@ -330,7 +324,7 @@
   .section-margin {
     margin-top: 2rem;
   }
-  
+
   .form {
     min-width: 310px;
     max-width: 310px;
@@ -339,7 +333,6 @@
   .donation-form {
     min-width: 200px;
     max-width: 320px;
-
   }
 
   .donation-payment-cc-exp {
@@ -347,8 +340,9 @@
     flex-direction: column;
   }
 
-  .exp-sel-day, .exp-sel-month {
-    height: 40px; 
+  .exp-sel-day,
+  .exp-sel-month {
+    height: 40px;
     margin-bottom: 15px;
   }
 }
