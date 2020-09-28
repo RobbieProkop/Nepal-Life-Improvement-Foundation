@@ -661,9 +661,9 @@ a.ui-button:active,
   font-size: 3rem;
 }
 
-.form-container {
+/* .form-container {
   max-width: 1250px;
-}
+} */
 
 .donation-payment-form {
   /* display: grid;
@@ -970,10 +970,19 @@ a.ui-button:active,
   align-items: center;
   text-align: center;
   justify-content: center;
-  font-size: 2rem;
-  width: 100%;
+  max-width: 1200px;
+  margin-left: 2rem;
   color: #fff;
   z-index: 1;
+}
+
+.maintenance-txt > h3 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.maintenance-txt > p {
+  font-size: 1.5rem;
 }
 
 #donate-main.donate::before {
