@@ -1117,8 +1117,9 @@ a.ui-button:active,
   grid-gap: 1rem;
 }
 
-#project-articles .articles-container > *:first-child,
-#project-articles .articles-container > *:last-child {
+#project-articles .articles-container > *:nth-child(1),
+#project-articles .articles-container > *:nth-child(7),
+#project-articles .articles-container > *:nth-child(11) {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 1rem;
@@ -1126,7 +1127,8 @@ a.ui-button:active,
   grid-column: 1 / span 2;
 }
 
-#project-articles .articles-container > *:last-child {
+#project-articles .articles-container > *:nth-child(7),
+#project-articles .articles-container > *:nth-child(17) {
   grid-column: 2 / span 2;
 }
 
