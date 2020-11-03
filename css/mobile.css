@@ -201,18 +201,18 @@
   }
 
   .gal-4 {
-    background: url("../img/Nepal/begnas-lake.jpg") top center;
+    background: url("../img/Nepal/webp/begnas-lake.webp") top center;
     background-size: cover;
     grid-column: 1 / span 2;
   }
 
   .gal-5 {
-    background: url("../img/Nepal/bandipur.jpg") center center/cover;
+    background: url("../img/Nepal/webp/bandipur.webp") center center/cover;
     background-size: cover;
   }
 
   .gal-6 {
-    background: url("../img/mountain-3.jpg") center center/cover;
+    background: url("../img/webp/mountain-3.webp") center center/cover;
     background-size: cover;
     grid-column: 2 / span 1;
   }
