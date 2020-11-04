@@ -102,7 +102,7 @@ img {
 /* Header */
 
 .hero {
-  background: url("../img/webp/mountain-1.webp") no-repeat center center/cover;
+  background: url("../img/mountain-1.jpg") no-repeat center center/cover;
   height: 100vh;
   position: relative;
   color: #fff;
