@@ -169,6 +169,11 @@
 }
 
 @media (max-width: 768px) {
+  /* Hero */
+  .hero.blog {
+    height: 80vh;
+  }
+
   /* icons */
   .flex-items {
     flex-direction: column;
@@ -244,6 +249,17 @@
 
 #footer p {
   font-size: 0.8rem;
+}
+
+@media (max-width: 667px) {
+  /* Projects */
+  #project-articles .articles-container,
+  #project-articles .articles-container > *:nth-child(1),
+  #project-articles .articles-container > *:nth-child(7),
+  #project-articles .articles-container > *:nth-child(11) {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 414px) {
