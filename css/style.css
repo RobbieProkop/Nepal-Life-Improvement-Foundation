@@ -106,7 +106,7 @@ img {
   height: 100vh;
   position: relative;
   color: #fff;
-  z-index: 1;
+  z-index: 2;
 }
 
 .hero.stories {
@@ -222,6 +222,10 @@ img {
 }
 
 /* Focus */
+#focus .section-header {
+  padding-top: 0;
+}
+
 .focus {
   background: var(--primary-color);
   color: #fff;
@@ -232,6 +236,10 @@ img {
   background: var(--primary-color);
 }
 /* Gallery */
+
+#gallery .section-header {
+  padding-top: 0;
+}
 
 .gal-1 {
   background: url("../images/webp/mountain-4.webp") center center/cover;
@@ -995,14 +1003,15 @@ a.ui-button:active,
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--primary-color);
+  background: var(--secondary-color);
+
   opacity: 0.9;
   z-index: 1;
 }
 
 /* Team */
 .founders {
-  margin-top: 3rem;
+  margin-top: 4rem;
 }
 .team {
   background: var(--light-color);
@@ -1038,7 +1047,6 @@ a.ui-button:active,
 .contact {
   background: var(--secondary-color);
   color: #fff;
-  margin-top: 3rem;
 }
 
 #contact .column-2 > form {
@@ -1146,7 +1154,15 @@ a.ui-button:active,
   align-items: center;
   justify-content: center;
   text-align: center;
-  height: 150px;
+  height: 140px;
+}
+
+#footer > p {
+  margin-bottom: 0;
+}
+
+#footer p:last-child {
+  margin-bottom: 0;
 }
 
 #footer.stories {
