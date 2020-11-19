@@ -242,52 +242,52 @@ img {
 }
 
 .gal-1 {
-  background: url("../images/webp/mountain-4.webp") center center/cover;
+  background: url("../images/jpg/mountain-4.jpg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-2 {
-  background: url("../images/Nepal/webp/villager-workers-crop.webp") center
+  background: url("../images/jpg/Nepal/villager-workers-crop.jpg") center
     center/cover;
   background-size: cover;
 }
 
 .gal-3 {
-  background: url("../images/Nepal/webp/villagers-4-crop.webp") center center /
+  background: url("../images/jpg/Nepal/villagers-4-crop.jpg") center center /
     cover;
   background-size: cover;
 }
 
 .gal-4 {
-  background: url("../images/Nepal/webp/begnas-lake.webp") top center;
+  background: url("../images/jpg/Nepal/begnas-lake.jpg") top center;
   background-size: cover;
 }
 
 .gal-5 {
-  background: url("../images/Nepal/webp/bandipur.webp") center center/cover;
+  background: url("../images/jpg/Nepal/bandipur.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-6 {
-  background: url("../images/webp/mountain-3.webp") center center/cover;
+  background: url("../images/jpg/mountain-3.jpg") center center/cover;
   background-size: cover;
   grid-column: 3 / span 2;
 }
 
 .gal-7 {
-  background: url("../images/Nepal/webp/buddha-crop.webp") center center/cover;
+  background: url("../images/jpg/Nepal/buddha-crop.jpg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-8 {
-  background: url("../images/Nepal/webp/monks-crop.webp") center center/cover;
+  background: url("../images/jpg/Nepal/monks-crop.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-9 {
-  background: url("../images/Nepal/webp/misty-village.webp") center center/cover;
+  background: url("../images/jpg/Nepal/misty-village.jpg") center center/cover;
   background-size: cover;
 }
 
