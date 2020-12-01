@@ -263,8 +263,30 @@
 }
 
 @media (max-width: 414px) {
+  .btn {
+    font-size: 1.3rem;
+  }
+  .hero .content h1 {
+    font-size: 3rem;
+  }
   .navbar {
     padding: 0;
+  }
+
+  .hero .content > p,
+  .hero .content > a {
+    display: none;
+  }
+
+  /* Icons */
+  #about .icons-1,
+  #about .icons-2,
+  #about .icons-3 h3 {
+    display: none;
+  }
+
+  #about .icons-3 a {
+    display: inline-block;
   }
 
   /* Gallery */
@@ -316,6 +338,9 @@
 
   /* Contact */
   .contact-form {
+    width: 100%;
+  }
+  #contact .column-2 > form {
     width: 100%;
   }
 }

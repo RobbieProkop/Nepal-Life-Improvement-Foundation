@@ -203,7 +203,16 @@ img {
 
 .icons p {
   font-size: 1rem;
-  max-width: 450px;
+  max-width: 550px;
+}
+
+.icons-3 a {
+  display: none;
+}
+
+.btn-icons {
+  background: var(--primary-color) !important;
+  margin: 1rem 0;
 }
 
 /* About */
@@ -974,6 +983,11 @@ a.ui-button:active,
 }
 
 /* Overlay */
+
+.maintenance {
+  align-items: center;
+  justify-content: center;
+}
 .maintenance-txt {
   position: absolute;
   display: flex;
@@ -1111,6 +1125,10 @@ a.ui-button:active,
 }
 
 /* Projects */
+.hero.blog .btn {
+  padding: 10px 20px;
+}
+
 #project-articles {
   background: #e4e4e4;
 }
@@ -1141,6 +1159,11 @@ a.ui-button:active,
 #project-articles .articles-container > *:nth-child(7),
 #project-articles .articles-container > *:nth-child(17) {
   grid-column: 2 / span 2;
+}
+
+#project-articles .articles-container > *:nth-child(11) {
+  align-items: center;
+  grid-column: 1 / span 3;
 }
 
 #project-articles .articles-container .card-center {
