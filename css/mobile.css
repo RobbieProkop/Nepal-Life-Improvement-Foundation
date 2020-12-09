@@ -301,6 +301,10 @@
   .flex-columns p {
     text-align: left;
   }
+
+  .flex-columns .column-2 {
+    padding: 1rem;
+  }
   /* Gallery */
   .gal-grid {
     display: flex;
