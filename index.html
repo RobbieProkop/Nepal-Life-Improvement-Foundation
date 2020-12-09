@@ -56,7 +56,7 @@
 
     <div class="content">
       <h1>Nepal Life Improvement Foundation</h1>
-      <p>Improving the lives of Nepalese villagers one project at a time</p>
+      <p>Helping to provide opportunities for Nepalese Villagers</p>
       <a href="#donate-main" class="btn">
         <i class="fas fa-chevron-right"></i>  Donate Today</a>
     </div>
@@ -70,8 +70,7 @@
           <img src="./icons/kindness.svg" alt="">
           <div>
             <h3>Assisting Those Experiencing Hardship</h3>         
-            <p>Our focus is on small scale projects for individuals and families, on level of urgency
-              and basic needs</p>
+            <p>Our focus is on small scale projects for individuals and families, on level of urgency and basic needs, as well as community development resources for long term skill and learning opportunities.</p>
           </div>
         </div>
         <div class="icons icons-2">
@@ -121,8 +120,8 @@
               November 2019, along with Robbie Prokop we were officially incorporated as a Canadian Non
               Profit Organization. In 2020 Lilly Mason came on board, and helped to expand our fundraising
               base which has enabled us to take on more projects.</p>
-            <a href="#donate-main" class="btn btn-outline btn-about">
-              <i class="fas fa-chevron-right"></i>  Make a Donation</a>
+            <a href="#contact" class="btn btn-outline btn-about">
+              <i class="fas fa-chevron-right"></i>  Get In Touch</a>
           </div>
         </div>
       </div>
@@ -145,12 +144,11 @@
             <h2>Pachabhaiya Community Development Centre</h2>
             <p>
               We have been approached by local community leaders with an opportunity to take over a large three story building that was recently left vacant. <br>
-              We are converting it to a Community Resource Centre that we will use to host a variety of educational and skill development workshops and programs, including a demonstration permaculture garden where locals can learn sustainable agriculture. Other workshop plans include bee keeping, jewellery making, literacy classes for women, English classes, home repair and tool training, environmental stewardship and more. We have begun facilitating weekly fitness classes and art classes for children. The cost of operating this facility will be $2000 a month. Management and Program coordination is on a volunteer basis, however we will provide income for local labour and workshop instructors. 
+              We are converting it to a Community Resource Centre that we will use to host a variety of educational and skill development workshops and programs, including a demonstration permaculture garden where locals can learn sustainable agriculture. Other workshop plans include bee keeping, jewellery making, literacy classes, English classes, home repair and tool training, environmental stewardship and more. We have begun facilitating weekly fitness classes and art classes for children. The cost of operating this facility will be $2000 a month. Management and Program coordination is on a volunteer basis, however we will provide income for local labour and workshop instructors. 
    
             </p>
-            <a href="#donate-main" class="btn btn-outline">
-              <i class="fas fa-chevron-right"></i>  Donate Now</a>
-          </div>
+            <a href="./projects.html" class="btn btn-outline">
+              <i class="fas fa-chevron-right"></i>  Read More</a>
         </div>
 
     </section>
@@ -164,32 +162,22 @@
         <!-- Maintenance Overlay -->
         
         <div class="form-container">
-          <div class="maintenance">
+          <!-- <div class="maintenance">
             <div class="maintenance-txt">
               <h3>Under Maintenance</h3>
               <p>To make a donation from Canada, please send an etransfer to nepallif@gmail.com. For international donations, please send an email to nepallif@gmail.com for banking details.</p>
             </div>
-          </div>
-            <form action="POST" data-netlify="true">
+          </div> -->
+            <!-- <form action="https://www.paypal.com/donate" method="post" target="_top" data-netlify="true"> -->
               <div class="donation-payment-form">
 
                 <!-- #1 Name and Email -->
 
-                <div class="form info">
+                <!-- <div class="form info">
                   <div class="donation-header .donation-header-info">
                     <h3><span>1</span> Name & Email</h3>
                   </div>
                   <div class="donation-form billing-info">
-                    <!-- <div class="billing-info address dn-txt">
-                      <label for="name">Full Name</label> <br>
-                      <input type="text" class="billing-address" name="billing-address">
-                    </div>
-
-                    <div class="billing-info email dn-txt">
-                      <label for="email">Email</label> <br>
-                      <input type="text" class="billing-name email" name="billing-name-email">
-                    </div> -->
-
                     <div class="billing-info first-name name dn-txt">
                       <input type="text" class="billing-name first-name" name="billing-name-first-name" placeholder="Full Name">
                     </div>
@@ -208,42 +196,42 @@
                     <button class="dn-btn btn btn-secondary" type="button">Next</button>
                     
                   </div>
-                </div>
-
+                </div> -->
+                
                 <!-- #2 Payment -->
+                
                 <div class="form pay">
                   <div class="donation-header .donation-header-info">
-                    <h3><span>2</span> Donation Payment Type</h3>
+                    <h3><span>1</span> Donation Payment Type</h3>
                   </div>
 
                   <div class="donation-form donation-select-payment-radio">
-
-                    <div id="radio" class="dn-am">
-                      
-                      <fieldset class="donation-am payment-type">
-                        <div>
-                          <div>
-                            <label for="radio-1">Paypal</label>
-                            <input type="radio" name="radio-1" id="radio-1">
-                          </div>
-                          <div>
-                            <label for="radio-2">e-Transfer</label>
-                            <input type="radio" name="radio-1" id="radio-2">
-                          </div>
-                          
+                    <fieldset class="donation-am payment-type">
+                      <div>
+                        <div class="paypal">
+                          <form action="https://www.paypal.com/donate" method="post" target="_top" id="paypal">
+                            <input type="hidden" name="hosted_button_id" value="UJL786Y548AG4" />
+                            <input type="image" src="https://www.nepallife.org/images/Paypal-btn-2.jpeg" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"/>
+                            <img alt=""  src="https://www.paypal.com/en_CA/i/scr/pixel.gif" width="1" height="1" />
+                          </form>
                         </div>
-                      </fieldset>
-                    </div>
-
+                        <!-- <div class="stripe">
+                          <form action="/charge" method="POST">
+                            <script src="https://checkout.stripe.com/checkout.js" class="stripe-button" data-key="pk_test_51Hs1T1Bt40Bgu1zrCIOAfNYdU3zkiOlv9QqdvI1aYTApunpOZfTf4UxIPsbkm8bo6DGrlfPx8slcoSiXTF6Jlq9200sjR9Ej6k" data-amount="20000" data-name="NLIF Donation" data-description="Donation for NLIF" data-image="https://www.nepallife.org/images/stripe/marketplace.png" data-locale="auto">
+                            </script>
+                          </form>
+                        </div> -->
+                      </div>
+                    </fieldset>
                     <div class="tax-p">
+                      <p>* At the moment, only donations made through Paypal and direct e-transfers are accepted. E-transfers can be sent to nepallif@gmail.com </p>
                       <p>Please be aware that donations to the Nepal Life Improvement Foundation are not tax-deductable.</p>
                     </div>
-                    <button class="submit dn-btn btn btn-light" type="button">Proceed</button>
-                    
+                    <!-- <button class="submit dn-btn btn btn-light" type="button">Paypal</button> -->
                   </div>
                 </div>
               </div>
-            </form>
+            <!-- </form> -->
           
         </div>
       </div>
