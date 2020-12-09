@@ -285,10 +285,22 @@
     display: none;
   }
 
+  #about .icons-3 {
+    margin-bottom: none;
+  }
   #about .icons-3 a {
     display: inline-block;
   }
 
+  /* About */
+  .flex-columns h2 {
+    text-align: left;
+    font-size: 2.5rem;
+  }
+
+  .flex-columns p {
+    text-align: left;
+  }
   /* Gallery */
   .gal-grid {
     display: flex;
@@ -355,10 +367,6 @@
   }
 
   .section-header h2 {
-    font-size: 2.5rem;
-  }
-
-  .flex-columns h2 {
     font-size: 2.5rem;
   }
 
