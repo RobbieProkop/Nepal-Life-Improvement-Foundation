@@ -255,20 +255,18 @@ img {
 }
 
 .gal-1 {
-  background: url("../images/jpg/mountain-4.jpg") center center/cover;
+  background: url("../images/gal/sunset-1.jpeg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-2 {
-  background: url("../images/jpg/Nepal/villager-workers-crop.jpg") center
-    center/cover;
+  background: url("../images/gal/village-man-1.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-3 {
-  background: url("../images/jpg/Nepal/villagers-4-crop.jpg") center center /
-    cover;
+  background: url("../images/gal/village-boy-crop.jpg") center center / cover;
   background-size: cover;
 }
 
@@ -278,7 +276,7 @@ img {
 }
 
 .gal-5 {
-  background: url("../images/jpg/Nepal/bandipur.jpg") center center/cover;
+  background: url("../images/gal/mtn-cloud-crop.jpeg") center center/cover;
   background-size: cover;
 }
 
@@ -289,18 +287,18 @@ img {
 }
 
 .gal-7 {
-  background: url("../images/jpg/Nepal/buddha-crop.jpg") center center/cover;
+  background: url("../images/gal/village-lady-1-crop.jpg") center center/cover;
   background-size: cover;
   grid-column: 1 / span 2;
 }
 
 .gal-8 {
-  background: url("../images/jpg/Nepal/monks-crop.jpg") center center/cover;
+  background: url("../images/gal/flower-2.JPEG") center center/cover;
   background-size: cover;
 }
 
 .gal-9 {
-  background: url("../images/jpg/Nepal/misty-village.jpg") center center/cover;
+  background: url("../images/gal/rainbow.jpeg") center center/cover;
   background-size: cover;
 }
 
@@ -695,10 +693,11 @@ a.ui-button:active,
   display: flex;
   justify-content: space-evenly;
   padding: 0 1rem;
+  background: url(../images/gal/sunset-2.JPEG) center center / cover;
 }
 
 .donation-header {
-  background: var(--primary-color);
+  /* background: var(--primary-color); */
   padding: 1rem 0 1rem 1rem;
   text-align: left;
   color: #fff;
@@ -712,7 +711,7 @@ a.ui-button:active,
 
 .donation-header span {
   background: #fff;
-  color: #333;
+  /* color: #333; */
   padding: 2px 8px 5px;
   margin-right: 0.5rem;
   border-radius: 50%;
@@ -720,10 +719,16 @@ a.ui-button:active,
 
 .donation-form {
   /* display: grid; */
-  border: 2px solid var(--primary-color);
-  color: #333;
+
+  /* border: 6px solid var(--primary-color); */
+  color: #fff;
   padding: 1rem;
-  max-width: 446px;
+  /* max-width: 446px; */
+  max-width: 1200px;
+}
+
+.donation-form h2 {
+  padding-bottom: 2rem;
 }
 
 .donation-form > * {
