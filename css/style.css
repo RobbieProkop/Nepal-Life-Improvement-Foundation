@@ -70,6 +70,7 @@ img {
   top: 0;
   width: 100%;
   height: 60px;
+  z-index: 10;
 }
 
 .navbar ul {
@@ -123,25 +124,23 @@ img {
   padding: 0 1.3rem;
 }
 
-.hero.stories {
-  background: url(../images/Nepal/webp/begnas-boat-crop.webp) no-repeat center
-    center/cover;
-  height: 100vh;
-}
-
-.hero.donate-now {
-  background: var(--third-color);
-  height: 30vh;
+.hero .content * {
+  z-index: 1;
 }
 
 .hero .content h1 {
   font-size: 3.3rem;
-  margin-top: 9rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 .hero .content p {
   font-size: 1.5rem;
   max-width: 700px;
-  margin: 15px 0 25px;
+  margin: 1rem 0 2rem;
+}
+
+.hero .content .btn {
+  margin-top: 2rem;
 }
 
 .hero.stories .content h1 {
@@ -160,14 +159,14 @@ img {
   height: 100%;
 }
 
-.hero.stories::before {
+.hero::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 .hero.blog {
@@ -324,45 +323,7 @@ img {
   max-height: 600px;
 }
 
-/* Donation */
-/* 1 - Payment Amount */
-/* #donate-main .container {
-  background: #fff;
-  color: #333;
-}
-
-#donate-main .container > h2 {
-  display: flex; 
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  padding: 1.5rem 0;
-  font-size: 3rem;
-}
-
-
-#donate .container > h2 {
-  display: flex; 
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  padding-top: 1.5rem;
-  font-size: 3rem;
-}
-
-.form-container {
-  max-width: 1250px;
-  margin: auto;
-}
-
-.donation-payment-form {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 1rem;
-  padding: 0 1rem;
-}
-
-.donation-header {
+/*.donation-header {
   background: var(--primary-color);
   padding: 1rem 0 1rem 1rem;
   text-align: left;
@@ -393,266 +354,7 @@ img {
 .donation-form > * {
   margin: .5rem 0;
 }
-
-/* Select Menu */
-/* .ui-widget{
-  font-family: Roboto, sans-serif !important;
-}
-
-.ui-selectmenu-button.ui-button {
-  background: #fff;
-  border: solid 1px var(--primary-color);
-  width: auto;
-  padding: 10px 15px;
-}
-
-.ui-visual-focus {
-  box-shadow: 0 0 0px 0px #fff !important;
-}
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-button:hover,
-.ui-button:focus {
-  border: 1px solid var(--primary-color) !important;
-  color: #fff !important;
-}
-
-.ui-selectmenu-button.ui-button:hover {
-  color: #333!important;
-}
-.ui-state-active,
-.ui-widget-content .ui-state-active,
-.ui-widget-header .ui-state-active,
-a.ui-button:active,
-.ui-button:active,
-.ui-button.ui-state-active:hover {
-	border: 1px solid var(--primary-color) !important;
-  background: var(--primary-color) !important;
-  color: #fff !important;
-  opacity: 0.6;
-}
-.ui-icon-background,
-.ui-state-active .ui-icon-background {
-	border: var(--primary-color) !important;
-}
-
-:focus {
-  outline: none;
-  border: var(--primary-color) solid 1px;
-}
-
-.ui-selectmenu-button.ui-button {
-	text-align: left;
-	white-space: nowrap;
-	width: 70%;
-}
-
-.ui-menu .ui-menu-item-wrapper:hover {
-  background: var(--primary-color);
-  color: #fff;
-  opacity: 0.95;
-}
-
-#time-menu .ui-state-active {
-  background: var(--primary-color);
-  border: none;
-  color: #fff;
-}
-
-.dn-txt > input {
-  padding-left: 5px;
-  height: 40px;
-  border: 1px solid var(--primary-color);
-  width: 100%;
-}
-
-.dn-f {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.dn-f label {
-  font-size: 1.2rem;
-}
-
-.dn-f > span {
-  padding: 10px; 
-  margin-left: 10px;
-} */
-
-/* Checkbox Radio Donation Amount */
-
-/* .donation-am  {
-  font-size: 20px;
-  font-family: Roboto, sans-serif;
-  border: none;
-  color: #333;
-}
-
-.donation-am > div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-}
-
-.donation-am > div > div {
-  margin-right: 0;
-  border-radius: 3px;
-}
-
-.donation-am label {
-  width: 100%;
-}
-
-.donation-am > div > div:hover {
-  background: var(--primary-color);
-  color: #fff;
-  opacity: 0.6;
-}
-.ui-checkboxradio-radio-label .ui-icon-background {
-  display: none;
-} 
-
-.donation-am .ui-button {
-  background: var(--primary-color);
-  color: #fff;
-  margin-right: 0;
-}
-
-
-.donation-am .ui-button:hover {
-  background: var(--primary-color);
-  opacity: 0.6;
-}
-
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-button:hover,
-.ui-button:focus { 
-	color: #fff;
-}
-.select-other {
-  display: grid;
-  grid-column: 1 / span 2;
-}
-
-.select-other > input {
-  font-size: 1.3rem;
-} */
-
-.tax-p {
-  font-size: 14px;
-  margin: 0;
-}
-
-/* 2 - Payment Type */
-
-/* .donation-payment-cc-exp {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 5px;
-}
-
-.donation-payment-cc-exp .cc-exp-h4 {
-  display: grid;
-  grid-column: 1 / span 3;
-}
-
- .donation-payment-cc-exp .cvc-h4 {
-  display: grid;
-  grid-column: 4 / span 1;
-  grid-row: 1 / span 1;
-} 
-
- .donation-payment-cc-exp .exp-sel-day {
-  display: grid;
-  grid-column: 1 / span 1;
-}
-
-.donation-payment-cc-exp .exp-sel-day > select {
-  padding-left: 5px;
-}
-
-.donation-payment-cc-exp .exp-sel-month {
-  display: grid;
-  grid-column: 2 / span 1;
-}
-
-.donation-payment-cc-exp .exp-sel-month > select {
-  padding-left: 5px;
-}
-
-.donation-payment-cc-exp .cvc {
-  display: grid;
-  grid-column: 4 / span 4;
-} 
-
-#cc-exp-day, #cc-exp-month {
-  border: 1px solid var(--primary-color);
-  
-} */
-
-/* 3 - Address */
-/* .donation-form.billing-info > input {
-  padding-left: 2px;
-}
-
-
-.donation-form.billing-info {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 10px;
-}
-
-.donation-form.billing-info .dn-txt {
-  margin-bottom: 0px;
-}
-
-.donation-form.billing-info .address {
-  grid-column: 1 / span 2;
-}
-
-.donation-form.billing-info .email {
-  grid-column: 1 / span 2;
-}
-
-.donation-text-checkbox {
-  grid-column: 1 /span 2;
-  font-size: 14px;
-  margin-bottom: 0;
-}
-
-.donation-text-checkbox > * p {
-  margin-bottom: 0;
-}
-
-.donation-text-checkbox .toggler {
-  height: 1rem;
-  width: 1rem;
-  margin-right: 15px;
-}
-
-
-
-.donation-text-checkbox .checkbox {
-  font-weight: 600;
-  font-style: italic;
-}
-
-.donation-form.billing-info > button {
-  grid-column: 1 / span 2; 
-  margin-top: 18px;
-} */
+*/
 
 /* Donation */
 /* 1 - Payment Amount */
@@ -683,9 +385,19 @@ a.ui-button:active,
   font-size: 3rem;
 }
 
-/* .form-container {
-  max-width: 1250px;
-} */
+.donation-payment-form::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.donation-payment-form * {
+  z-index: 1;
+}
 
 .donation-payment-form {
   /* display: grid;
@@ -718,118 +430,46 @@ a.ui-button:active,
 }
 
 .donation-form {
-  /* display: grid; */
+  display: grid;
 
-  /* border: 6px solid var(--primary-color); */
   color: #fff;
   padding: 1rem;
+  margin: 1rem 0;
   /* max-width: 446px; */
   max-width: 1200px;
 }
 
 .donation-form h2 {
-  padding-bottom: 2rem;
+  /* padding-bottom: 1rem; */
+  /* margin-right: 3rem; */
+  margin-top: 0.5rem;
 }
-
+/* 
 .donation-form > * {
   margin: 0.5rem 0;
-}
-
-/* Select Menu */
-/* .ui-widget {
-  font-family: Roboto, sans-serif !important;
-}
-
-.ui-selectmenu-button.ui-button {
-  background: #fff;
-  border: solid 1px var(--primary-color);
-  width: auto;
-  padding: 10px 15px;
-}
-
-.ui-visual-focus {
-  box-shadow: 0 0 0px 0px #fff !important;
-}
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-button:hover,
-.ui-button:focus {
-  border: 1px solid var(--primary-color) !important;
-  color: #fff !important;
-}
-
-.ui-selectmenu-button.ui-button:hover {
-  color: #333 !important;
-}
-.ui-state-active,
-.ui-widget-content .ui-state-active,
-.ui-widget-header .ui-state-active,
-a.ui-button:active,
-.ui-button:active,
-.ui-button.ui-state-active:hover {
-  border: 1px solid var(--primary-color) !important;
-  background: var(--primary-color) !important;
-  color: #fff !important;
-  opacity: 0.6;
-}
-.ui-icon-background,
-.ui-state-active .ui-icon-background {
-  border: var(--primary-color) !important;
-}
-
-:focus {
-  outline: none;
-  border: var(--primary-color) solid 1px;
-}
-
-.ui-selectmenu-button.ui-button {
-  text-align: left;
-  white-space: nowrap;
-  width: 70%;
-}
-
-.ui-menu .ui-menu-item-wrapper:hover {
-  background: var(--primary-color);
-  color: #fff;
-  opacity: 0.95;
-}
-
-#time-menu .ui-state-active {
-  background: var(--primary-color);
-  border: none;
-  color: #fff;
-}
-
-.dn-txt > input {
-  padding-left: 5px;
-  height: 40px;
-  border: 1px solid var(--primary-color);
-  width: 100%;
-}
-
-.dn-f {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.dn-f label {
-  font-size: 1.2rem;
-}
-
-.dn-f > span {
-  padding: 10px;
-  margin-left: 10px;
 } */
 
-/* Checkbox Radio Donation Amount */
+.donorbox a {
+  /* background: #057389  url(https://d1iczxrky3cnb2.cloudfront.net/red_logo.png) no-repeat 37px; */
+  background: #057389;
+  color: #fff;
+  font-family: Verdana, sans-serif;
+  display: inline-block;
+  font-size: 16px;
+  padding: 11px 25px;
+}
+
+.tax-p {
+  font-size: 16px;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+  text-align: center;
+  max-width: 780px;
+}
 
 .donation-am {
-  display: flex;
+  display: grid;
   justify-content: center;
   font-size: 20px;
   font-family: Roboto, sans-serif;
@@ -837,192 +477,10 @@ a.ui-button:active,
   color: #333;
 }
 
-/* .donation-am > div {
+.donation-am > div {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-}
-
-.donation-am > div > div {
-  margin-right: 0;
-  border-radius: 3px;
-} */
-
-.donation-am label {
-  width: 100%;
-}
-
-.donation-am > div > div:hover {
-  background: var(--primary-color);
-  color: #fff;
-  opacity: 0.6;
-}
-/* .ui-checkboxradio-radio-label .ui-icon-background {
-  display: none;
-}
-
-.donation-am .ui-button {
-  background: var(--primary-color);
-  color: #fff;
-  margin-right: 0;
-}
-
-.donation-am .ui-button:hover {
-  background: var(--primary-color);
-  opacity: 0.6;
-}
-
-.ui-state-hover,
-.ui-widget-content .ui-state-hover,
-.ui-widget-header .ui-state-hover,
-.ui-state-focus,
-.ui-widget-content .ui-state-focus,
-.ui-widget-header .ui-state-focus,
-.ui-button:hover,
-.ui-button:focus {
-  color: #fff;
-}
-.select-other {
-  display: grid;
-  grid-column: 1 / span 2;
-}
-
-.select-other > input {
-  font-size: 1.3rem;
-}
-
-.tax-p {
-  font-size: 14px;
-  margin: 0;
-} */
-
-/* 2 - Payment Type */
-/* 
-.donation-payment-cc-exp {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 5px;
-}
-
-.donation-payment-cc-exp .cc-exp-h4 {
-  display: grid;
-  grid-column: 1 / span 3;
-}
-
-.donation-payment-cc-exp .cvc-h4 {
-  display: grid;
-  grid-column: 4 / span 1;
-  grid-row: 1 / span 1;
-}
-
-.donation-payment-cc-exp .exp-sel-day {
-  display: grid;
-  grid-column: 1 / span 1;
-}
-
-.donation-payment-cc-exp .exp-sel-day > select {
-  padding-left: 5px;
-}
-
-.donation-payment-cc-exp .exp-sel-month {
-  display: grid;
-  grid-column: 2 / span 1;
-}
-
-.donation-payment-cc-exp .exp-sel-month > select {
-  padding-left: 5px;
-}
-
-.donation-payment-cc-exp .cvc {
-  display: grid;
-  grid-column: 4 / span 4;
-}
-
-#cc-exp-day,
-#cc-exp-month {
-  border: 1px solid var(--primary-color);
-}
-
-/* 3 - Address */
-.donation-form.billing-info > input {
-  padding-left: 2px;
-}
-
-.donation-form.billing-info {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 10px;
-}
-
-.donation-form.billing-info .dn-txt {
-  margin-bottom: 0px;
-}
-
-.donation-form.billing-info .address {
-  grid-column: 1 / span 2;
-}
-
-.donation-form.billing-info .email {
-  grid-column: 1 / span 2;
-}
-
-.donation-text-checkbox {
-  grid-column: 1 / span 2;
-  font-size: 14px;
-  margin-bottom: 0;
-}
-
-.donation-text-checkbox > * p {
-  margin-bottom: 0;
-}
-
-.donation-text-checkbox .toggler {
-  height: 1rem;
-  width: 1rem;
-  margin-right: 15px;
-}
-
-.donation-text-checkbox .checkbox {
-  font-weight: 600;
-  font-style: italic;
-}
-
-.donation-form.billing-info > button {
-  grid-column: 1 / span 2;
-  margin-top: 18px;
-}
-*/
-
-/* Stripe Checkout Styling */
-
-
-.StripeElement {
-  box-sizing: border-box;
-
-  height: 40px;
-
-  padding: 10px 12px;
-
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: white;
-
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
-
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.StripeElement--invalid {
-  border-color: #fa755a;
-}
-
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
+  grid-gap: 3rem;
 }
 
 /* Overlay */

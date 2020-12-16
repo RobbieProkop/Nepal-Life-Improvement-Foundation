@@ -147,6 +147,11 @@
   color: inherit;
 }
 
+/* hero */
+.hero .content h1 {
+  margin-top: 1rem;
+}
+
 /* Donation */
 
 .donation-payment-form {
@@ -158,6 +163,10 @@
 
 .donation-form {
   min-width: 446px;
+}
+
+.donation-form .tax-p {
+  font-size: 14px;
 }
 
 .form {
@@ -321,36 +330,30 @@
   }
 
   /* Donation */
-  .form {
-    min-width: 320px;
-    max-width: 320px;
-  }
 
   .donation-form {
-    min-width: 200px;
-    max-width: 320px;
+    min-width: 350px;
+    max-width: 400px;
+    padding: 1rem 0;
   }
 
-  .dn-f {
-    display: block;
-    text-align: center;
+  .donation-form > * {
+    margin: 0;
   }
 
-  .ui-widget {
-    margin-top: 10px;
-  }
-
-  .donation-sel-am-radio {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+  .donation-form h2 {
+    margin-right: 0;
+    text-align: left;
   }
 
   .donation-am {
     text-align: center;
   }
 
-  .select-other {
-    grid-column: 1 / span 2;
+  .donation-am > div {
+    display: flex;
+    flex-direction: column-reverse;
+    grid-gap: 2rem;
   }
 
   /* Contact */
@@ -406,5 +409,29 @@
   .exp-sel-month {
     height: 40px;
     margin-bottom: 15px;
+  }
+}
+
+/* Landscape mode */
+
+@media (max-height: 414px) {
+  /* Hero */
+  .hero .content > p,
+  .hero .content > a {
+    display: none;
+  }
+
+  /* Icons */
+  #about .icons-1,
+  #about .icons-2,
+  #about .icons-3 h3 {
+    display: none;
+  }
+
+  #about .icons-3 {
+    margin-bottom: none;
+  }
+  #about .icons-3 a {
+    display: inline-block;
   }
 }
