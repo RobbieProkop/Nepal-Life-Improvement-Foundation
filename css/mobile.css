@@ -357,7 +357,11 @@
   }
 
   .donation-am .donorbox {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .donation-am .donorbox a {
+    border-radius: 3px;
   }
 
   /* Contact */
