@@ -356,6 +356,10 @@
     grid-gap: 2rem;
   }
 
+  .donation-am .donorbox {
+    margin-bottom: 1rem;
+  }
+
   /* Contact */
   .contact-form {
     width: 100%;
