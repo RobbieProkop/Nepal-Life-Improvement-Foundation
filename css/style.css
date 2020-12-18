@@ -205,7 +205,7 @@ img {
 }
 
 .hero.blog {
-  background: url("../images/Nepal/village-workers-2-crop.jpg") no-repeat center
+  background: url("../images/Nepal/village-workers-3.jpg") no-repeat center
     center/cover;
 }
 
@@ -221,6 +221,7 @@ img {
 
 .hero.blog .content .btn {
   background: var(--bg-light);
+  padding: 10px 30px;
 }
 
 .blog-posts > .flex-columns img {
@@ -319,7 +320,7 @@ img {
 }
 
 .gal-6 {
-  background: url("../images/jpg/mountain-3.jpg") center center/cover;
+  background: url("../images/jpg/mountain-3-small.jpg") center center/cover;
   background-size: cover;
   grid-column: 3 / span 2;
 }
@@ -331,12 +332,12 @@ img {
 }
 
 .gal-8 {
-  background: url("../images/gal/flower-2.JPEG") center center/cover;
+  background: url("../images/gal/flower-3.jpg") center center/cover;
   background-size: cover;
 }
 
 .gal-9 {
-  background: url("../images/gal/rainbow-2.jpg") center center/cover;
+  background: url("../images/gal/rainbow-3.jpg") center center/cover;
   background-size: cover;
 }
 
