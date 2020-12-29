@@ -247,7 +247,7 @@
   }
 
   .gal-6 {
-    background: url("../images/jpg/mountain-3.jpg") center center/cover;
+    background: url("../images/jpg/mountain-3-small.jpg") center center/cover;
     background-size: cover;
     grid-column: 2 / span 1;
   }
