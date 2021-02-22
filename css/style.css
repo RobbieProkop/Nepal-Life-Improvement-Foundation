@@ -241,7 +241,7 @@ img {
 }
 
 .icons p {
-  font-size: 1rem;
+  font-size: 1.2rem;
   max-width: 550px;
 }
 
@@ -701,5 +701,5 @@ img {
 }
 
 #footer .links p {
-  font-size: 8px;
+  font-size: 0.7rem;
 }
