@@ -246,7 +246,11 @@ img {
 }
 
 .icons-3 {
-  margin-bottom: 3rem;
+  margin-bottom: 8rem;
+}
+
+.icons-3 p{
+  padding-top: 1.5rem;
 }
 
 .icons-3 a {
