@@ -172,15 +172,14 @@
                     <fieldset class="donation-am payment-type">
                       <div>
                         <div class="paypal">
-                          <form action="https://www.paypal.com/donate" method="post" target="_top" id="paypal">
+                          <form action="https://www.paypal.com/donate" method="post" target="_blank" id="paypal">
                             <input type="hidden" name="hosted_button_id" value="UJL786Y548AG4" />
-                            <input type="image" src="https://www.nepallife.org/images/paypal-btn.jpg" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"/>
-                            <img alt=""  src="https://www.paypal.com/en_CA/i/scr/pixel.gif" width="1" height="1" />
+                            <button type="submit" class="donate-btn bg-light" title="PayPal - The safer, easier way to pay online!">PayPal</button>
+                            <img alt="" src="https://www.paypal.com/en_CA/i/scr/pixel.gif" width="1" height="1" />
                           </form>
                         </div>
                         <div class="donorbox">
-
-                          <a href="https://donorbox.org/nepal-life-improvement-foundation" target="_blank">Credit Card</a>
+                          <a href="https://donorbox.org/nepal-life-improvement-foundation" target="_blank" class="donate-btn">Credit Card</a>
                         </div>
                       </div>
                     </fieldset>
@@ -357,16 +356,18 @@
             </div>
           </div>
           <div class="column">
-            <div class="column-2 .bg-light">
+            <div class="column-2">
               <h2>Get in Touch</h2>
               <form name="contact" method="POST" data-netlify="true" data-netlify-recaptcha="true">
+                <input type="hidden" name="form-name" value="contact">
                 <div class="contact-form">
                   <div class="form-control">
                     <input type="text" name="name" class="name" placeholder="Name">
-                    <input type="text" name="email" class="email" placeholder="Email">
+                    <input type="email" name="email" class="email" placeholder="Email">
                     <input type="text" name="phone" class="phone" placeholder="Phone">
                     <textarea name="message" class="subject" placeholder="Write a Message"></textarea>
                   </div>
+                  <div data-netlify-recaptcha="true"></div>
                   <button type="submit">Send</button>
                   
                 </div>
@@ -383,9 +384,8 @@
   
   <!-- footer -->
   <footer id="footer" class="bg-dark">
-    <p>Copyright &copy; 2022 - All Rights Reserved - Nepal Life Improvement Foundation</p>
+    <p>Copyright &copy; 2026 - All Rights Reserved - Nepal Life Improvement Foundation</p>
     <div class="links">
-      <!-- <p>Icons made by <a href="http://www.freepik.com" target="_blank" title="Freepik">Freepik,</a> <a href="https://www.flaticon.com/free-icon/charity_2869375?term=charity&page=5&position=84" target="_blank" title="Nikita Golubev">Nikita Golubev, </a> and <a href="https://www.flaticon.com/authors/srip" target="_blank" title="srip">srip </a>from <a href="https://www.flaticon.com/" target="_blank" title="Flaticon">flaticon.com</a></p> -->
       <p>Photos by <a href="https://www.facebook.com/lillian.mason.58?__tn__=%2CdC-R-R&eid=ARDAuWczIzdLymhIirB5S-M5uTXUH7tLKDx1b9uDKGKwbHrnSPAQi_rCFILQIlGMrzd0q05m5gn0duB-&hc_ref=ARSv0S_MP-bg66NTHAat_MP1DEmYGp0D6XyQfRd9_eVCVj1M6qkUruuJSZOs8Ro6Zs4&fref=nf" target="_blank" title="Lilly">Lilly Mason, </a>, Sankalak, Robbie Prokop, <a href="https://www.pexels.com/photo/woman-in-red-dresses-carrying-firewood-3820222/" target="_blank" title="Meyer">Volker Meyer, and </a> <a href="https://unsplash.com/@antoinebarres" target="_blank">Antoine Barrès</a></p>
     </div>
   </footer>
