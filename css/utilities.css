@@ -4,11 +4,20 @@
   display: inline-block;
   background: var(--secondary-color);
   color: #fff;
-  padding: 12px 30px;
+  padding: 0.85rem 1.6rem;
   border: none;
-  border-radius: 5px;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+}
+
+.btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  background: #6a8a28;
 }
 
 .btn-primary {
@@ -19,14 +28,32 @@
 }
 
 .btn-secondary {
-  background: var(--secondary-color);
+  background: transparent;
 }
 
 .btn-light {
   background: var(--bg-light);
 }
-.btn:hover {
-  opacity: 0.7;
+
+.btn-outline {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.btn-outline:hover {
+  background: #fff;
+  color: var(--primary-deep);
+  opacity: 1;
+}
+
+.btn-hero {
+  background: var(--secondary-color);
+  color: #fff;
+}
+
+.btn-hero:hover {
+  background: #6a8a28;
 }
 
 .dn-btn.btn {
@@ -41,22 +68,28 @@
 }
 
 .category {
-  display: inline-block;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
   color: #fff;
-  font-size: 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  padding: 0.4rem 0.6rem;
-  border-radius: 15px;
-  margin-bottom: 0.5rem;
-  max-width: 6rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 0;
+  margin: 0;
   text-align: center;
 }
+
 .category-inf {
   background: var(--bg-light);
 }
+
 .category-hea {
   background: var(--secondary-color);
 }
+
 .category-gen {
   background: var(--fourth-color);
 }
@@ -75,9 +108,14 @@
   color: #fff;
 }
 
+.bg-white {
+  background: var(--bg-white);
+}
+
 .py-1 {
   padding: 1rem 0;
 }
+
 .py-2 {
   padding: 1rem 0;
 }
@@ -85,33 +123,36 @@
 /* About icons */
 .flex-items {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   text-align: center;
-  margin-right: 1rem;
+  gap: 1rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
 }
 
 .flex-items > div {
-  padding: 1.4rem;
-  flex-direction: row;
+  padding: 1.4rem 1rem;
+  flex: 1;
 }
 
-/* Icons */
 .flex-items .icons img {
-  max-width: 120px;
-  max-height: 120px;
-  margin-top: 2rem;
+  max-width: 72px;
+  max-height: 72px;
+  margin: 0 auto 1rem;
+  opacity: 0.9;
 }
 
 /* Flex-columns */
 .flex-columns.flex-reverse .row {
   flex-direction: row-reverse;
 }
+
 .flex-columns .row {
   display: flex;
   flex-direction: row;
-  flex-wrap: 100%;
-  flex: 1;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .flex-columns .column {
@@ -119,6 +160,7 @@
   flex-direction: column;
   flex-basis: 100%;
   flex: 1;
+  min-width: 0;
 }
 
 .flex-columns .column .column-1 {
@@ -134,6 +176,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  min-height: 320px;
 }
 
 .flex-columns .column-2 {
@@ -141,12 +184,12 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  padding: 2rem;
+  padding: clamp(1.75rem, 4vw, 3rem);
 }
 
 .flex-columns h2 {
-  font-size: 3rem;
-  font-weight: 100;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  font-weight: 600;
 }
 
 .flex-columns h4 {
@@ -154,12 +197,14 @@
 }
 
 .flex-columns p {
-  margin: 1.3rem 0;
+  margin: 1.1rem 0;
+  font-size: 1.05rem;
+  max-width: 58ch;
 }
 
 /* Section Header */
 .section-header {
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,36 +213,45 @@
 }
 
 .section-header h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  font-size: clamp(1.85rem, 3.5vw, 2.75rem);
+  margin-bottom: 0.75rem;
 }
 
 .section-padding {
-  padding: 20px 20px 0;
+  padding: 0;
 }
+
+/* Kept for markup compatibility; spacing is handled by main > section + section */
 .section-margin {
-  margin-top: 4rem;
+  margin-top: 0;
 }
+
 /* Gallery */
 .gal-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 5px;
-  max-width: 1350;
+  gap: 6px;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .gal {
   display: grid;
-  border: #ccc solid 1px;
-  height: 220px;
+  height: 240px;
+  overflow: hidden;
+}
+
+.gal a {
+  display: block;
+  height: 100%;
 }
 
 .gal:hover {
-  opacity: 0.7;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
 }
 
 .photos .row {
   max-height: 700px;
 }
-
-/* Donation */

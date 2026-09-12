@@ -1,11 +1,14 @@
-.hero .content h1 {
-  margin-top: -5rem;
-  margin-bottom: 1rem;
-  font-size: 2.5rem;
+.hero .content {
+  padding-bottom: 14vh;
 }
 
-.hero .content .btn {
-  margin-top: 1rem;
+.hero-brand {
+  font-size: clamp(2.1rem, 9vw, 3.2rem);
+  max-width: 12ch;
+}
+
+.hero-tagline {
+  font-size: 1.05rem;
 }
 
 /* Hamburger Menu */
@@ -30,21 +33,21 @@
 }
 
 .menu-wrap .hamburger {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 2;
-  width: 60px;
-  height: 60px;
-  padding: 1rem;
-  background: var(--primary-color);
   display: flex;
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  padding: 0.9rem;
+  background: rgba(4, 80, 96, 0.85);
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: var(--radius);
 }
 
-/* hamburger line */
 .menu-wrap .hamburger > div {
   position: relative;
   flex: none;
@@ -57,8 +60,6 @@
   transition: all 0.4s ease;
 }
 
-/* Hamburger Lines - Top and Bottom */
-
 .menu-wrap .hamburger > div:before,
 .menu-wrap .hamburger > div:after {
   content: "";
@@ -69,29 +70,25 @@
   height: 2px;
   background: inherit;
 }
-/* Moves Line Down */
+
 .menu-wrap .hamburger > div:after {
   top: 10px;
 }
 
-/*  Toggler Animation */
 .menu-wrap .toggler:checked + .hamburger > div {
   transform: rotate(135deg);
 }
 
-/* Turns into X */
 .menu-wrap .toggler:checked + .hamburger > div:before,
 .menu-wrap .toggler:checked + .hamburger > div:after {
   top: 0;
   transform: rotate(90deg);
 }
 
-/* ROtate on Hover When Checked */
 .menu-wrap .toggler:checked:hover + .hamburger > div {
   transform: rotate(225deg);
 }
 
-/* SHow Menu */
 .menu-wrap .toggler:checked ~ .menu {
   visibility: visible;
 }
@@ -106,7 +103,6 @@
   transition: opacity 0.4s ease 0.4s;
 }
 
-/* Menu */
 .menu-wrap .menu {
   position: fixed;
   top: 0;
@@ -122,7 +118,7 @@
 }
 
 .menu-wrap .menu > div {
-  background: var(--overlay-color);
+  background: rgba(4, 80, 96, 0.96);
   border-radius: 50%;
   width: 300vw;
   height: 300vw;
@@ -157,50 +153,38 @@
   color: inherit;
 }
 
-/* hero */
-.hero .content h1 {
-  margin-top: 1rem;
-}
-
 /* Donation */
-
 .donation-payment-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 3rem 1.25rem;
 }
 
 .donation-form {
-  min-width: 446px;
+  width: 100%;
+  max-width: 480px;
 }
 
 .donation-form .tax-p {
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .form {
   margin: 10px 0;
-}
-
-#donate-main .maintenance-txt {
-  margin-left: 0;
+  width: 100%;
 }
 
 @media (max-width: 768px) {
-  /* Hero */
-
-  .hero .content h1 {
-    font-size: 2rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-  }
-
   .hero.blog {
-    height: 80vh;
+    min-height: 60vh;
   }
 
-  /* icons */
+  .video-section {
+    padding: 3rem 1.25rem;
+  }
+
   .flex-items {
     flex-direction: column;
     margin-right: 0;
@@ -210,7 +194,6 @@
     margin-top: 10px;
   }
 
-  /* Why We Started & Stories */
   .flex-columns .row,
   .flex-columns.flex-reverse .row {
     display: flex;
@@ -219,40 +202,38 @@
   }
 
   .flex-columns .column-2 {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
     justify-content: center;
   }
 
-  /* Gallery */
+  .flex-columns img {
+    min-height: 240px;
+  }
+
   .gal-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 5px;
+    gap: 5px;
   }
 
   .gal {
-    height: 250px;
+    height: 220px;
   }
 
   .gal-4 {
-    background: url("../images/jpg/Nepal/begnas-lake.jpg") top center;
-    background-size: cover;
+    background: url("../images/jpg/Nepal/begnas-lake.jpg") top center / cover;
     grid-column: 1 / span 2;
   }
 
   .gal-5 {
-    background: url("../images/gal/mtn-cloud-crop.jpeg") center center/cover;
-    background-size: cover;
+    background: url("../images/gal/mtn-cloud-crop.jpeg") center center / cover;
   }
 
   .gal-6 {
-    background: url("../images/jpg/mountain-3-small.jpg") center center/cover;
-    background-size: cover;
+    background: url("../images/jpg/mountain-3-small.jpg") center center / cover;
     grid-column: 2 / span 1;
   }
-
-  /* Founders */
 
   .team .section-header {
     margin-bottom: 0;
@@ -260,6 +241,7 @@
 
   .team img {
     width: 70%;
+    max-width: 220px;
   }
 
   .team .flex-items .president {
@@ -271,14 +253,11 @@
   }
 }
 
-/* Footer */
-
 #footer p {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
 }
 
 @media (max-width: 667px) {
-  /* Projects */
   #project-articles .articles-container,
   #project-articles .articles-container > *:nth-child(1),
   #project-articles .articles-container > *:nth-child(7),
@@ -290,21 +269,17 @@
 
 @media (max-width: 414px) {
   .btn {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
-  .hero .content h1 {
-    font-size: 2rem;
-    margin-top: 0;
-  }
+
   .navbar {
-    padding: 0;
+    padding: 0 1rem;
   }
 
-  .hero .content > a {
-    display: none;
+  .hero .content {
+    padding: 0 1.25rem 12vh;
   }
 
-  /* Icons */
   #about .icons-1,
   #about .icons-2,
   #about .icons-3 h3 {
@@ -314,132 +289,93 @@
   #about .icons-3 {
     margin-bottom: 0;
   }
+
   #about .icons-3 a {
     display: inline-block;
   }
 
-  /* About */
   .flex-columns h2 {
     text-align: left;
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .flex-columns p {
     text-align: left;
+    font-size: 1rem;
   }
 
   .flex-columns .column-2 {
-    padding: 1rem;
+    padding: 1.5rem 1.25rem;
   }
-  /* Gallery */
+
   .gal-grid {
     display: flex;
     flex-direction: column;
   }
 
   .gal {
-    margin: 5px 0;
+    margin: 0;
+    height: 200px;
   }
 
   .gal a {
     display: none;
   }
 
-  /* Donation */
-
-  .donation-form {
-    min-width: 350px;
-    max-width: 400px;
-    padding: 1rem 0;
-  }
-
-  .donation-form > * {
-    margin: 0;
-  }
-
-  .donation-form h2 {
-    margin-right: 0;
-    text-align: left;
-  }
-
-  .donation-am {
-    text-align: center;
-  }
-
   .donation-am > div {
     display: flex;
     flex-direction: column-reverse;
-    grid-gap: 2rem;
+    gap: 1rem;
   }
 
   .donation-am .donorbox {
-    margin-bottom: 2rem;
+    margin-bottom: 0;
   }
 
-  .donation-am .donate-btn {
-    border-radius: 3px;
-  }
-
-  /* Contact */
   .contact-form {
     width: 100%;
   }
+
   #contact .column-2 > form {
     width: 100%;
+    max-width: none;
   }
 }
 
 @media (max-width: 320px) {
-  /* .hero .content h1 {
-    font-size: 2.5rem;
-  } */
-
   .section-header h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .flex-columns h2 {
-    font-size: 2.3rem;
-  }
-
-  .flex-columns p {
-    font-size: 1rem;
-  }
-
-  .section-margin {
-    margin-top: 2rem;
-  }
-
-  .form {
-    min-width: 310px;
-    max-width: 310px;
+    font-size: 1.85rem;
   }
 
   .donation-form {
-    min-width: 200px;
-    max-width: 320px;
+    max-width: 100%;
   }
 }
 
-/* Landscape mode */
+@media (max-height: 414px) and (orientation: landscape) {
+  .hero .content {
+    padding-bottom: 8vh;
+  }
 
-@media (max-height: 414px) {
-  /* Hero */
-  .hero .content > p,
-  .hero .content > a {
+  .hero-brand {
+    font-size: 1.85rem;
+    max-width: none;
+  }
+
+  .hero-tagline {
     display: none;
   }
 
-  /* Icons */
   #about .icons-1,
   #about .icons-2,
   #about .icons-3 h3 {
     display: none;
   }
 
-  #about .icons-3 {
-    margin-bottom: none;
-  }
   #about .icons-3 a {
     display: inline-block;
   }
