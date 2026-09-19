@@ -1,0 +1,336 @@
+/* ==========================================================================
+   THEME TOKENS
+   Two complete design systems — Journal (light) and Ascent (dark) — exposed
+   through one set of semantic custom properties. unified.css never references
+   a raw hex value, so the entire look of the site is decided in this file.
+
+   Switching model
+   ---------------
+   The <html> element carries data-theme="light" or data-theme="dark", set by
+   an inline script before first paint. Light is the default, so:
+
+     :root                      -> light (also the no-JavaScript fallback)
+     :root[data-theme="dark"]   -> dark
+
+   There is deliberately no `prefers-color-scheme` media query. This build
+   changes layout as well as colour, and the two must stay in sync; a media
+   query would hand no-JavaScript visitors dark colours inside the light
+   layout. Visitors without JavaScript get the complete Journal design
+   instead, which is a coherent page rather than a broken hybrid.
+
+   Contrast
+   --------
+   Every foreground/background pair below was calculated against WCAG 2.1.
+   Body and small text clear 4.5:1, large text and UI borders clear 3:1.
+   The recorded ratios are in the comments; if you change a value, recheck it.
+   ========================================================================== */
+
+:root {
+  /* ======================================================================
+     RAW PALETTES
+     Each colour is defined exactly once here and only ever referenced by
+     the semantic mapping blocks further down.
+     ====================================================================== */
+
+  /* --- Journal (light) ------------------------------------------------- */
+  --journal-paper: #f3eee4; /* warm paper ground */
+  --journal-paper-2: #e8e0d1; /* recessed panels, image placeholders */
+  --journal-paper-3: #dcd2bf;
+  --journal-ink: #17140f; /* 15.6:1 on paper */
+  --journal-ink-soft: #4b443a; /* 8.2:1  on paper */
+  --journal-ink-faint: #6e6559; /* 4.9:1  on paper — safe for small mono */
+  --journal-rule: #d8cdb9; /* decorative hairline */
+  --journal-rule-strong: #7f7563; /* 3.9:1 — safe for input underlines */
+  --journal-marigold: #a8400f; /* 5.2:1  on paper, 5.2:1 under paper text */
+  --journal-teal: #1c5b64; /* 6.5:1  on paper */
+
+  /* --- Ascent (dark) --------------------------------------------------- */
+  --ascent-abyss: #0b1116; /* deep slate ground */
+  --ascent-slate: #16212a; /* raised panels */
+  --ascent-slate-2: #1e2d38;
+  --ascent-glacier: #e6eef1; /* 16.2:1 on abyss */
+  --ascent-fog: #93a8b3; /* 7.8:1  on abyss */
+  --ascent-fog-dim: #7d919c; /* 5.8:1  on abyss — safe for small mono */
+  --ascent-hairline: rgba(230, 238, 241, 0.12); /* decorative hairline */
+  --ascent-hairline-strong: #6b7c86; /* 4.4:1 — safe for input underlines */
+  --ascent-ember: #d99a5b; /* 7.9:1  on abyss — warm accent, matches
+                                    marigold's hue family */
+  --ascent-contour: #5f9a82; /* 5.9:1  on abyss — secondary accent */
+
+  /* ======================================================================
+     TYPOGRAPHY
+     Three families, not four. Space Grotesk is the body face in both
+     themes and the display face in dark; Fraunces is the display face in
+     light only; IBM Plex Mono carries metadata in both. Swapping the
+     display face is what makes the two themes read as different designs
+     without loading a fourth family on every visit.
+     ====================================================================== */
+
+  --font-journal-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-ascent-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-body: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Type scale. Shared by both themes so the rhythm of the page survives
+     the toggle even though the letterforms change. */
+  --step-hero: clamp(2.8rem, 8vw, 6.75rem);
+  --step-title: clamp(2rem, 4.4vw, 3.5rem);
+  --step-sub: clamp(1.35rem, 2.2vw, 1.95rem);
+  --step-body: clamp(1.02rem, 1.05vw, 1.15rem);
+  --step-meta: 0.78rem;
+
+  /* ======================================================================
+     GEOMETRY
+     Identical across themes. Only colour, texture, type and the handful of
+     per-theme layout rules in unified.css change on toggle.
+     ====================================================================== */
+
+  --shell: 84rem;
+  --edge: clamp(1.25rem, 4.5vw, 3.75rem);
+  --gutter: clamp(1rem, 1.9vw, 1.75rem);
+  --nav-height: 3.75rem;
+  --band: clamp(4.5rem, 9vw, 8rem);
+
+  /* ======================================================================
+     ACTIVE MAPPING — JOURNAL (light)
+     ====================================================================== */
+
+  color-scheme: light;
+
+  --surface: var(--journal-paper);
+  --surface-2: var(--journal-paper-2);
+  --surface-3: var(--journal-paper-3);
+
+  --ink: var(--journal-ink);
+  --ink-soft: var(--journal-ink-soft);
+  --ink-faint: var(--journal-ink-faint);
+
+  --rule: var(--journal-rule);
+  --rule-strong: var(--journal-rule-strong);
+
+  --accent: var(--journal-marigold);
+  --accent-2: var(--journal-teal);
+
+  /* The donate band inverts: accent ground, paper text. */
+  --band-surface: var(--journal-marigold);
+  --band-ink: var(--journal-paper);
+  --band-rule: rgba(243, 238, 228, 0.38);
+
+  /* Solid buttons. */
+  --btn-surface: var(--journal-ink);
+  --btn-ink: var(--journal-paper);
+
+  --focus-ring: var(--journal-marigold);
+  --skip-bg: var(--journal-ink);
+  --skip-fg: var(--journal-paper);
+
+  /* Display face. */
+  --font-display: var(--font-journal-display);
+  --display-weight: 600;
+  --display-tracking: -0.022em;
+  --display-leading: 1.05;
+  --display-variation: "opsz" 96;
+  --hero-tracking: -0.035em;
+
+  /* Photographs sit warm on paper. */
+  --photo-filter: saturate(0.92) contrast(1.02);
+  --photo-filter-hover: saturate(1.05) contrast(1.05);
+
+  /* The source icons are dark line art, so they need no treatment on paper. */
+  --icon-filter: none;
+  --icon-opacity: 0.55;
+
+  /* Texture: paper tooth on, topographic contours off. Generated rather
+     than fetched, so switching themes costs no network request. */
+  --grain-opacity: 0.045;
+  --grain-blend: multiply;
+  --topo-opacity: 0;
+
+  /* Hero artwork.
+     Both heroes are declared as background images rather than <img> tags so
+     that the browser only ever downloads the one the active theme renders —
+     a display:none element's background is never fetched, whereas a hidden
+     <img> with a src generally still is. Neither is lazy-loaded, so whichever
+     hero is showing is also a fast Largest Contentful Paint.
+
+     image-set() with type() keeps the WebP-with-JPEG-fallback negotiation
+     that a <picture> element would have provided. The elements carry
+     role="img" and an aria-label so the accessible description survives.
+
+     Paths are relative to this stylesheet, which lives two levels below the
+     project root. If you move this file, these are the only URLs to update. */
+  --hero-portrait: image-set(
+    url("../../images/Nepal/webp/villagers-1-crop.webp") type("image/webp"),
+    url("../../images/jpg/Nepal/villagers-1-crop.jpg") type("image/jpeg")
+  );
+  --hero-bleed: none;
+
+  /* Lightbox theming, consumed by lightbox.css. */
+  --lb-theme-backdrop: rgba(23, 20, 15, 0.95);
+  --lb-theme-surface: #17140f;
+  --lb-theme-fg: #f3eee4;
+  --lb-theme-accent: #e3a04f;
+  --lb-theme-radius: 0;
+}
+
+/* ==========================================================================
+   ACTIVE MAPPING — ASCENT (dark)
+   ========================================================================== */
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface: var(--ascent-abyss);
+  --surface-2: var(--ascent-slate);
+  --surface-3: var(--ascent-slate-2);
+
+  --ink: var(--ascent-glacier);
+  --ink-soft: var(--ascent-fog);
+  --ink-faint: var(--ascent-fog-dim);
+
+  --rule: var(--ascent-hairline);
+  --rule-strong: var(--ascent-hairline-strong);
+
+  --accent: var(--ascent-ember);
+  --accent-2: var(--ascent-contour);
+
+  /* In dark the band inverts the other way: a bright glacier panel cut
+     into the page, which is how Ascent handled its donate section. */
+  --band-surface: var(--ascent-glacier);
+  --band-ink: var(--ascent-abyss);
+  --band-rule: rgba(11, 17, 22, 0.2);
+
+  --btn-surface: var(--ascent-glacier);
+  --btn-ink: var(--ascent-abyss);
+
+  --focus-ring: var(--ascent-contour);
+  --skip-bg: var(--ascent-glacier);
+  --skip-fg: var(--ascent-abyss);
+
+  --font-display: var(--font-ascent-display);
+  --display-weight: 500;
+  --display-tracking: -0.032em;
+  --display-leading: 1.02;
+  --display-variation: normal;
+  --hero-tracking: -0.042em;
+
+  /* Photographs go cool and recede into the dark ground. */
+  /* --photo-filter: saturate(0.6) contrast(1.08) brightness(0.88); */
+  --photo-filter-hover: saturate(1) contrast(1.02) brightness(1);
+
+  /* brightness(0) flattens the line art to black, invert(1) makes it white. */
+  --icon-filter: brightness(0) invert(1);
+  --icon-opacity: 0.5;
+
+  /* Texture: contours on, paper tooth off. */
+  --grain-opacity: 0;
+  --grain-blend: normal;
+  --topo-opacity: 1;
+
+  /* The dark hero is a full-bleed mountain photograph; the inline portrait
+     is not rendered, so it is never downloaded. */
+  --hero-portrait: none;
+  --hero-bleed: image-set(
+    url("../../images/webp/mountain-1.webp") type("image/webp"),
+    url("../../images/mountain-1.jpg") type("image/jpeg")
+  );
+
+  --lb-theme-backdrop: rgba(11, 17, 22, 0.97);
+  --lb-theme-surface: #0f171d;
+  --lb-theme-fg: #e6eef1;
+  --lb-theme-accent: #5f9a82;
+  --lb-theme-radius: 0;
+}
+
+/* ==========================================================================
+   TEXTURE LAYERS
+   Two fixed, non-interactive overlays whose opacity is theme-driven. Both
+   stay in the DOM at all times; only their opacity changes, so toggling
+   never triggers a paint of new image data.
+   ========================================================================== */
+
+.texture {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+}
+
+/* Paper tooth — light only. */
+.texture::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  transition: opacity 0.4s ease;
+}
+
+/* Topographic contours — dark only. Concentric rings at three origins and
+   spacings read as survey contours, with no image and no SVG to maintain. */
+.texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: var(--topo-opacity);
+  background-image:
+    repeating-radial-gradient(
+      circle at 14% 12%,
+      transparent 0 44px,
+      rgba(95, 154, 130, 0.13) 44px 45px
+    ),
+    repeating-radial-gradient(
+      circle at 86% 64%,
+      transparent 0 62px,
+      rgba(95, 154, 130, 0.09) 62px 63px
+    ),
+    repeating-radial-gradient(
+      circle at 44% 108%,
+      transparent 0 88px,
+      rgba(95, 154, 130, 0.06) 88px 89px
+    );
+  mask-image: radial-gradient(
+    ellipse 130% 90% at 50% 45%,
+    #000 30%,
+    transparent 100%
+  );
+  transition: opacity 0.4s ease;
+}
+
+/* ==========================================================================
+   TOGGLE TRANSITION
+   Colour is transitioned only during the moment of switching, via a class
+   that theme.js adds and then removes. Leaving a global colour transition
+   permanently enabled would make every hover and focus state feel sluggish.
+
+   Layout properties are excluded on purpose: this build changes layout
+   between themes, and animating a reflow is far worse than cutting to it.
+   ========================================================================== */
+
+.is-theme-switching,
+.is-theme-switching *,
+.is-theme-switching *::before,
+.is-theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    fill 0.35s ease,
+    opacity 0.35s ease !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .is-theme-switching,
+  .is-theme-switching *,
+  .is-theme-switching *::before,
+  .is-theme-switching *::after {
+    transition: none !important;
+  }
+
+  .texture::before,
+  .texture::after {
+    transition: none;
+  }
+}

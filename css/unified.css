@@ -1,0 +1,1928 @@
+/* ==========================================================================
+   UNIFIED COMPONENTS
+   One set of markup, two design treatments. This file contains no colour
+   literals and no font names — everything visual comes from theme.css.
+
+   How to read this file
+   ---------------------
+   Each component is written once as its shared structure, then followed by
+   the small number of rules that differ between themes, marked:
+
+       /% LIGHT %/   rules that apply when data-theme is absent or "light"
+       /% DARK  %/   rules that apply when data-theme is "dark"
+
+   Light is the default, so light rules are unprefixed and dark rules are
+   scoped to [data-theme="dark"]. That keeps the no-JavaScript fallback on a
+   complete, coherent design rather than a half-themed page.
+   ========================================================================== */
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.62;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+}
+
+em {
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   Layout primitives
+   -------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  width: min(100% - 2 * var(--edge), var(--shell));
+  margin-inline: auto;
+}
+
+.shell {
+  width: min(100% - 2 * var(--edge), var(--shell));
+  margin-inline: auto;
+}
+
+.band {
+  padding-block: var(--band);
+}
+
+.rule {
+  border: 0;
+  border-top: 1px solid var(--rule-strong);
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Metadata type — the monospace voice shared by both themes
+   -------------------------------------------------------------------------- */
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.meta--ink {
+  color: var(--ink-soft);
+}
+
+.meta--accent {
+  color: var(--accent);
+}
+
+figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.06em;
+  text-transform: none;
+  line-height: 1.5;
+  color: var(--ink-faint);
+  padding-top: 0.7rem;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   Shared: fixed bar, logo, nav, theme toggle, progress rail.
+   -------------------------------------------------------------------------- */
+
+.masthead {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.masthead.is-scrolled {
+  border-bottom-color: var(--rule);
+}
+
+.masthead__bar {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 2rem);
+  height: var(--nav-height);
+}
+
+.masthead__logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+}
+
+/* The nameplate subtitle belongs to the editorial theme. */
+.masthead__sub {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* The summit marker belongs to the dark theme. */
+.masthead__mark {
+  display: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--accent-2);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  align-self: center;
+}
+
+.masthead__nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1.5vw, 1.6rem);
+}
+
+.masthead__nav a {
+  position: relative;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-block: 0.5rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.masthead__nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+/* Set by site.js on whichever section currently fills the viewport. */
+.masthead__nav a.is-current {
+  color: var(--ink);
+  border-bottom-color: var(--accent-2);
+}
+
+.masthead__toggle,
+.masthead__burger {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.masthead__toggle:hover,
+.masthead__burger:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.masthead__toggle svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* Each theme shows the icon for the state you would move to, which is what
+   the button's accessible name also says. */
+.masthead__toggle .icon-moon {
+  display: block;
+}
+
+.masthead__toggle .icon-sun {
+  display: none;
+}
+
+.masthead__burger {
+  display: none;
+}
+
+.masthead__burger-bars,
+.masthead__burger-bars::before,
+.masthead__burger-bars::after {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.masthead__burger-bars::before,
+.masthead__burger-bars::after {
+  content: "";
+  position: relative;
+}
+
+.masthead__burger-bars::before {
+  top: -6px;
+}
+
+.masthead__burger-bars::after {
+  top: 4.5px;
+}
+
+.masthead__burger[aria-expanded="true"] .masthead__burger-bars {
+  background: transparent;
+}
+
+.masthead__burger[aria-expanded="true"] .masthead__burger-bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.masthead__burger[aria-expanded="true"] .masthead__burger-bars::after {
+  transform: translateY(-4.5px) rotate(-45deg);
+}
+
+/* Reading progress. site.js writes --progress as a 0–1 ratio; scaling a
+   pseudo-element avoids a layout-thrashing width change every frame. */
+.rail {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--rule);
+}
+
+.rail::before {
+  content: "";
+  display: block;
+  height: 100%;
+  background: var(--accent-2);
+  transform-origin: left center;
+  scale: var(--progress, 0) 1;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .masthead__sub {
+  display: none;
+}
+
+[data-theme="dark"] .masthead__mark {
+  display: block;
+}
+
+[data-theme="dark"] .masthead__toggle .icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] .masthead__toggle .icon-sun {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Section headings
+   Shared: number, title, note, opening hairline.
+   -------------------------------------------------------------------------- */
+
+.section-head {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 1rem;
+}
+
+.section-head__num {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 0.6rem;
+}
+
+.section-head__title {
+  grid-column: 2 / 9;
+  font-size: var(--step-title);
+  text-wrap: balance;
+}
+
+.section-head__note {
+  grid-column: 10 / -1;
+  align-self: end;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: var(--ink-faint);
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .section-head__num {
+  color: var(--accent-2);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.5rem;
+  background: var(--btn-surface);
+  color: var(--btn-ink);
+  border: 1px solid var(--btn-surface);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn::after {
+  content: "\2192";
+  transition: translate 0.2s ease;
+}
+
+.btn:hover::after {
+  translate: 4px 0;
+}
+
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--rule-strong);
+}
+
+.btn--outline:hover {
+  background: var(--btn-surface);
+  border-color: var(--btn-surface);
+  color: var(--btn-ink);
+}
+
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px solid var(--ink);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.arrow-link::after {
+  content: "\2192";
+  transition: translate 0.2s ease;
+}
+
+.arrow-link:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.arrow-link:hover::after {
+  translate: 4px 0;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+/* Ascent's buttons point up and to the right, toward the summit. */
+[data-theme="dark"] .btn::after,
+[data-theme="dark"] .arrow-link::after {
+  content: "\2197";
+}
+
+[data-theme="dark"] .btn:hover::after,
+[data-theme="dark"] .arrow-link:hover::after {
+  translate: 3px -3px;
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   The one component that genuinely needs two DOM branches: the light theme
+   sets an inline portrait beside the headline, the dark theme puts a
+   full-bleed photograph behind it.
+   -------------------------------------------------------------------------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__inner {
+  padding-top: calc(var(--nav-height) + clamp(2.5rem, 7vw, 6rem));
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: end;
+}
+
+.hero__text {
+  grid-column: 1 / 8;
+}
+
+.hero__dateline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero__dateline span::before {
+  content: "\00B7";
+  padding-right: 0.9rem;
+  color: var(--rule-strong);
+}
+
+.hero__title {
+  font-size: var(--step-hero);
+  letter-spacing: var(--hero-tracking);
+  text-wrap: balance;
+}
+
+.hero__title em {
+  color: var(--accent);
+}
+
+.hero__body {
+  max-width: 44ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.08rem, 1.3vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: 2.5rem;
+}
+
+/* Light-only: the inline portrait, painted from --hero-portrait so that the
+   dark theme never downloads it. See the note in theme.css. */
+.hero__figure {
+  grid-column: 9 / -1;
+  margin: 0;
+}
+
+.hero__portrait {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background-image: var(--hero-portrait);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--surface-2);
+  filter: var(--photo-filter);
+}
+
+/* Dark-only elements, hidden by default. */
+.hero__bleed,
+.hero__veil,
+.hero__coords,
+.hero__cue {
+  display: none;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .hero {
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+}
+
+[data-theme="dark"] .hero__inner {
+  padding-top: clamp(3rem, 8vh, 7rem);
+  padding-bottom: clamp(4rem, 12vh, 8rem);
+}
+
+[data-theme="dark"] .hero__text {
+  grid-column: 1 / 10;
+}
+
+[data-theme="dark"] .hero__figure {
+  display: none;
+}
+
+[data-theme="dark"] .hero__bleed {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: var(--hero-bleed);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.55) contrast(1.1) brightness(0.72);
+  scale: 1.06;
+  /* A slow drift keeps the frame alive without demanding attention. */
+  animation: heroDrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes heroDrift {
+  to {
+    scale: 1.14;
+  }
+}
+
+[data-theme="dark"] .hero__veil {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 17, 22, 0.72) 0%,
+      rgba(11, 17, 22, 0.35) 35%,
+      rgba(11, 17, 22, 0.9) 100%
+    ),
+    /* Faint vertical hairlines, like a survey overlay. */
+    repeating-linear-gradient(
+        90deg,
+        rgba(230, 238, 241, 0.05) 0 1px,
+        transparent 1px calc(100% / 6)
+      );
+}
+
+[data-theme="dark"] .hero__dateline {
+  border-bottom-color: transparent;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+  color: var(--accent-2);
+}
+
+[data-theme="dark"] .hero__dateline span::before {
+  color: currentColor;
+}
+
+[data-theme="dark"] .hero__title em {
+  color: var(--accent-2);
+}
+
+[data-theme="dark"] .hero__body {
+  color: color-mix(in srgb, var(--ink) 82%, transparent);
+}
+
+/* Coordinates set vertically along the left edge. */
+[data-theme="dark"] .hero__coords {
+  display: block;
+  position: absolute;
+  left: clamp(0.5rem, 1.5vw, 1.25rem);
+  top: 50%;
+  translate: 0 -50%;
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--ink) 55%, transparent);
+}
+
+[data-theme="dark"] .hero__cue {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+[data-theme="dark"] .hero__cue::after {
+  content: "";
+  width: 4rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-2), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Stats
+   Light: a ruled row divided by vertical hairlines.
+   Dark:  survey cells separated by hairline gutters.
+   -------------------------------------------------------------------------- */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  row-gap: 2rem;
+  border-block: 1px solid var(--rule-strong);
+  padding-block: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.stat {
+  display: grid;
+  gap: 0.4rem;
+  padding-left: clamp(0.75rem, 1.5vw, 1.25rem);
+  border-left: 1px solid var(--rule);
+}
+
+.stat:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.stat__value {
+  font-family: var(--font-display);
+  font-size: clamp(2.3rem, 4.5vw, 3.6rem);
+  font-weight: var(--display-weight);
+  line-height: 0.95;
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__value sup {
+  font-size: 0.4em;
+  vertical-align: super;
+  color: var(--accent);
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .stats {
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  padding-block: 0;
+}
+
+[data-theme="dark"] .stat {
+  background: var(--surface);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-left: 0;
+}
+
+[data-theme="dark"] .stat__value sup {
+  color: var(--accent-2);
+}
+
+/* --------------------------------------------------------------------------
+   Principles
+   Shared structure in both themes: hairline rows of numeral, icon, title,
+   body. The two designs had already converged here.
+   -------------------------------------------------------------------------- */
+
+.principles {
+  row-gap: 0;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.principle {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: start;
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-top: 1px solid var(--rule);
+  transition: background 0.3s ease;
+}
+
+.principle:last-of-type {
+  border-bottom: 1px solid var(--rule);
+}
+
+.principle__index {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding-top: 0.5rem;
+}
+
+.principle__icon {
+  grid-column: 2 / 3;
+  width: 2.75rem;
+  height: 2.75rem;
+  filter: var(--icon-filter);
+  opacity: var(--icon-opacity);
+}
+
+.principle__title {
+  grid-column: 3 / 8;
+  font-size: var(--step-sub);
+  text-wrap: balance;
+}
+
+.principle__body {
+  grid-column: 8 / -1;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+.principle__body .arrow-link {
+  margin-top: 1.25rem;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .principle__index {
+  color: var(--accent-2);
+}
+
+[data-theme="dark"] .principle:hover {
+  background: color-mix(in srgb, var(--ink) 3%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Film
+   -------------------------------------------------------------------------- */
+
+.film {
+  row-gap: 1.5rem;
+}
+
+.film__frame {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+  background: var(--surface-2);
+  border: 1px solid var(--rule);
+}
+
+.film__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.film figcaption {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   Story
+   One DOM — three chapters, each a photograph plus dated beats — read two
+   completely different ways.
+
+   Light: the chapter photograph runs full width as an editorial figure and
+          the beats become continuous prose with a drop cap and a pull quote
+          set into the margin.
+   Dark:  the photograph pins beside the text and stays put while each beat
+          scrolls past it.
+   -------------------------------------------------------------------------- */
+
+.chapter {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  row-gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.chapter + .chapter {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+.chapter__media {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.chapter__media img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  filter: var(--photo-filter);
+}
+
+.chapter__media figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.chapter__beats {
+  grid-column: 3 / 9;
+}
+
+.beat + .beat {
+  margin-top: 1.5rem;
+}
+
+.beat__year {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.beat__title {
+  font-size: var(--step-sub);
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+
+.beat p {
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+.beat p + p {
+  margin-top: 1.15rem;
+}
+
+/* The drop cap opens the story in the editorial theme. */
+.chapter:first-of-type .beat:first-of-type > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4.1em;
+  font-weight: var(--display-weight);
+  line-height: 0.76;
+  padding: 0.05em 0.1em 0 0;
+  color: var(--accent);
+}
+
+/* Light-only: a pull quote breaking into the right-hand margin. */
+.pullquote {
+  grid-column: 9 / -1;
+  align-self: start;
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--ink);
+}
+
+.pullquote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  font-weight: var(--display-weight);
+  line-height: 1.22;
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+  padding-top: 1rem;
+  margin: 0;
+}
+
+.pullquote figcaption {
+  padding-top: 1rem;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+/* No column-gap override here: a subgrid inherits its parent's gutters by
+   specification, so setting one would be silently ignored. */
+[data-theme="dark"] .chapter__media {
+  grid-column: 1 / 7;
+  position: sticky;
+  top: calc(var(--nav-height) + clamp(1.5rem, 4vh, 3rem));
+}
+
+[data-theme="dark"] .chapter__media img {
+  aspect-ratio: 4 / 5;
+}
+
+[data-theme="dark"] .chapter__beats {
+  grid-column: 7 / -1;
+}
+
+/* Alternating sides stop the three chapters reading as one long column. */
+[data-theme="dark"] .chapter:nth-of-type(even) .chapter__media {
+  grid-column: 7 / -1;
+  grid-row: 1;
+}
+
+[data-theme="dark"] .chapter:nth-of-type(even) .chapter__beats {
+  grid-column: 1 / 7;
+  grid-row: 1;
+}
+
+/* Tall beats are what give the pinned photograph something to hold against. */
+[data-theme="dark"] .beat {
+  min-height: 62svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+[data-theme="dark"] .beat + .beat {
+  margin-top: 0;
+}
+
+[data-theme="dark"] .beat__year {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent-2);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"]
+  .chapter:first-of-type
+  .beat:first-of-type
+  > p:first-of-type::first-letter {
+  float: none;
+  font-size: inherit;
+  font-family: inherit;
+  line-height: inherit;
+  padding: 0;
+  color: inherit;
+}
+
+[data-theme="dark"] .pullquote {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Focus
+   -------------------------------------------------------------------------- */
+
+.focus {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.focus__figure {
+  grid-column: 1 / 6;
+  margin: 0;
+  /* Deliberately off-balance in the editorial theme. */
+  margin-top: clamp(0rem, 6vw, 5rem);
+}
+
+.focus__figure img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: var(--photo-filter);
+}
+
+.focus__text {
+  grid-column: 7 / -1;
+}
+
+.focus__title {
+  font-size: var(--step-title);
+  text-wrap: balance;
+}
+
+.focus__text > p {
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin-top: 1.25rem;
+}
+
+.programme__title {
+  margin-top: 2rem;
+}
+
+.programme {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  margin-top: 1rem;
+  border-top: 1px solid var(--rule);
+}
+
+.programme li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.5rem 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.programme li::before {
+  content: "\2014";
+  color: var(--accent);
+  flex: none;
+}
+
+.focus__more {
+  margin-top: 2rem;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .focus__figure {
+  margin-top: 0;
+}
+
+[data-theme="dark"] .programme li {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+
+/* Ascent marks list items with the same summit triangle as the logo. */
+[data-theme="dark"] .programme li::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--accent-2);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Give
+   An inverted band in both themes: marigold on paper, glacier on slate.
+   -------------------------------------------------------------------------- */
+
+.give {
+  background: var(--band-surface);
+  color: var(--band-ink);
+  --focus-ring: var(--band-ink);
+}
+
+.give__inner {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.give__lead {
+  grid-column: 1 / 7;
+}
+
+.give__title {
+  font-size: var(--step-title);
+  text-wrap: balance;
+}
+
+.give__lead p {
+  margin-top: 1.25rem;
+  max-width: 42ch;
+  color: color-mix(in srgb, var(--band-ink) 82%, var(--band-surface));
+}
+
+.give .meta {
+  color: color-mix(in srgb, var(--band-ink) 78%, var(--band-surface));
+}
+
+.give__actions {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 1rem;
+}
+
+.give__actions .btn {
+  justify-content: space-between;
+  width: 100%;
+  background: var(--band-ink);
+  border-color: var(--band-ink);
+  color: var(--band-surface);
+}
+
+/* Solid hover must never use --band-surface (the section ground) or the
+   chip disappears into the band. Both themes use a contrasting accent:
+   teal on marigold in light, ember on glacier in dark. */
+.give__actions .btn:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--surface);
+}
+
+[data-theme="dark"] .give__actions .btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--band-ink);
+}
+
+.give__actions .btn--outline {
+  background: transparent;
+  color: var(--band-ink);
+  border-color: var(--band-rule);
+}
+
+.give__actions .btn--outline:hover {
+  background: var(--accent-2);
+  border-color: var(--accent-2);
+  color: var(--surface);
+}
+
+.give__note {
+  grid-column: 1 / 7;
+  display: grid;
+  gap: 0.5rem;
+  border-top: 1px solid var(--band-rule);
+  padding-top: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.give__note p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: color-mix(in srgb, var(--band-ink) 80%, var(--band-surface));
+}
+
+.give__note a {
+  border-bottom: 1px solid currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Gallery
+   Shared asymmetric spans and crops. Only the captions differ: set below
+   the plate in the editorial theme, overlaid on hover in the dark one.
+   -------------------------------------------------------------------------- */
+
+.gallery {
+  row-gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.plate {
+  position: relative;
+  grid-column: span 4;
+  margin: 0;
+}
+
+.plate a {
+  display: block;
+  overflow: hidden;
+  background: var(--surface-2);
+  /* Declared here so a plate never collapses if a crop modifier is missing,
+     and so the box is reserved before the photograph decodes. */
+  aspect-ratio: 4 / 3;
+}
+
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--photo-filter);
+  transition:
+    scale 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s ease;
+}
+
+.plate a:hover img,
+.plate a:focus-visible img {
+  scale: 1.04;
+  filter: var(--photo-filter-hover);
+}
+
+.plate figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+}
+
+/* Varied spans and crops are what stop this reading as a tile grid. */
+.plate--wide {
+  grid-column: span 8;
+}
+.plate--half {
+  grid-column: span 6;
+}
+.plate--tall a {
+  aspect-ratio: 3 / 4;
+}
+.plate--pano a {
+  aspect-ratio: 16 / 9;
+}
+.plate--square a {
+  aspect-ratio: 1;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+/* Captions move on top of the photographs, so the rows no longer need the
+   extra space underneath that the editorial theme leaves for them. */
+[data-theme="dark"] .gallery {
+  row-gap: var(--gutter);
+}
+
+[data-theme="dark"] .plate figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-top: 0;
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(0deg, rgba(11, 17, 22, 0.92), transparent);
+  opacity: 0;
+  translate: 0 0.5rem;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .plate:hover figcaption,
+[data-theme="dark"] .plate:focus-within figcaption {
+  opacity: 1;
+  translate: none;
+}
+
+/* Captions must not be hover-only where there is no hover. */
+@media (hover: none) {
+  [data-theme="dark"] .plate figcaption {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Projects
+   The same four children per row become either a ruled ledger or a
+   horizontally scrolling traverse, using grid in one theme and flex with
+   reordering in the other. No duplicated markup.
+   -------------------------------------------------------------------------- */
+
+.ledger {
+  grid-column: 1 / -1;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.ledger__row {
+  display: grid;
+  grid-template-columns: 3.5rem 9rem minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: var(--gutter);
+  align-items: baseline;
+  padding-block: clamp(1.1rem, 2vw, 1.6rem);
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.25s ease;
+}
+
+.ledger__row:hover {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.ledger__num {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* Category as a typographic tag: a rule and a word, never a coloured pill. */
+.ledger__cat {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.ledger__cat::before {
+  content: "";
+  width: 1.5rem;
+  height: 2px;
+  flex: none;
+  background: currentColor;
+}
+
+.ledger__cat[data-cat="infrastructure"] {
+  color: var(--accent);
+}
+.ledger__cat[data-cat="health"] {
+  color: var(--accent-2);
+}
+.ledger__cat[data-cat="general"] {
+  color: var(--ink-faint);
+}
+
+.ledger__title {
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  line-height: 1.2;
+  transition: translate 0.25s ease;
+}
+
+.ledger__row:hover .ledger__title {
+  translate: 4px 0;
+}
+
+.ledger__body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.ledger__hint {
+  display: none;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .ledger {
+  display: flex;
+  gap: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  border-top: 0;
+  padding-bottom: 1.75rem;
+  /* Lets the track bleed to the viewport edge while staying shell-aligned. */
+  margin-inline: calc(-1 * var(--edge));
+  padding-inline: var(--edge);
+  scrollbar-color: var(--accent-2) var(--surface-2);
+  scrollbar-width: thin;
+}
+
+[data-theme="dark"] .ledger:focus-visible {
+  outline-offset: -3px;
+}
+
+[data-theme="dark"] .ledger__row {
+  position: relative;
+  flex: 0 0 clamp(15rem, 26vw, 21rem);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-block: 2rem 0;
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: 0;
+}
+
+/* The summit marker sits on the timeline rule. */
+[data-theme="dark"] .ledger__row::before {
+  content: "";
+  position: absolute;
+  top: -0.3rem;
+  left: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--accent-2);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+[data-theme="dark"] .ledger__row:hover {
+  background: none;
+}
+
+[data-theme="dark"] .ledger__row:hover .ledger__title {
+  translate: none;
+}
+
+/* Reordering is what converts a table row into a card. */
+[data-theme="dark"] .ledger__num {
+  order: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+[data-theme="dark"] .ledger__title {
+  order: 1;
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+[data-theme="dark"] .ledger__body {
+  order: 2;
+  font-size: 0.93rem;
+}
+
+[data-theme="dark"] .ledger__cat {
+  order: 3;
+  margin-top: auto;
+  padding-top: 1rem;
+  color: var(--ink-faint);
+}
+
+[data-theme="dark"] .ledger__cat::before {
+  display: none;
+}
+
+[data-theme="dark"] .ledger__hint {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --------------------------------------------------------------------------
+   Team
+   Light: rectangular portraits on paper, tops aligned.
+   Dark:  a roster of survey cells.
+   -------------------------------------------------------------------------- */
+
+.team {
+  row-gap: 2rem;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.person {
+  grid-column: span 4;
+  margin: 0;
+}
+
+.person img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: var(--photo-filter);
+  transition: filter 0.4s ease;
+}
+
+.person:hover img {
+  filter: var(--photo-filter-hover);
+}
+
+.person figcaption {
+  display: grid;
+  gap: 0.25rem;
+  border-top: 1px solid var(--rule-strong);
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+}
+
+.person__name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+  color: var(--ink);
+  text-transform: none;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .team {
+  column-gap: 1px;
+  row-gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+[data-theme="dark"] .person {
+  background: var(--surface);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+  margin-top: 0;
+}
+
+[data-theme="dark"] .person figcaption {
+  border-top: 0;
+  padding-top: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Contact
+   Hairline fields in both themes — the two designs already agreed here.
+   -------------------------------------------------------------------------- */
+
+.contact {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.contact__figure {
+  grid-column: 1 / 5;
+  margin: 0;
+}
+
+.contact__figure img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: var(--photo-filter);
+}
+
+.contact__form {
+  grid-column: 6 / -1;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.field > label {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.field input,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 0.6rem 0;
+  transition: border-color 0.2s ease;
+}
+
+.field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-bottom-color: var(--ink-soft);
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent);
+  border-bottom-width: 2px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in srgb, var(--ink-faint) 70%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.colophon {
+  border-top: 1px solid var(--rule-strong);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  margin-top: var(--band);
+}
+
+.colophon__inner {
+  row-gap: 2rem;
+  align-items: start;
+}
+
+.colophon__brand {
+  grid-column: 1 / 5;
+}
+
+.colophon__brand p {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-variation-settings: var(--display-variation);
+  line-height: 1.1;
+}
+
+.colophon__brand .meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.colophon__col {
+  grid-column: span 3;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.colophon__col h2 {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.3rem;
+}
+
+.colophon__col a,
+.colophon__col p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.colophon__col a:hover {
+  color: var(--accent);
+}
+
+.colophon__legal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* % DARK % ---------------------------------------------------------------- */
+[data-theme="dark"] .colophon__col h2 {
+  color: var(--accent-2);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   The 12-column grid folds in two steps. Nothing is ever hidden: the
+   offsets, stagger and pinning flatten out, but every word stays on the page
+   at every width, in both themes.
+   ========================================================================== */
+
+@media (max-width: 62rem) {
+  .hero__text,
+  .hero__figure,
+  .chapter__beats,
+  .pullquote,
+  .focus__figure,
+  .focus__text,
+  .give__lead,
+  .give__actions,
+  .give__note,
+  .contact__figure,
+  .contact__form,
+  .colophon__brand {
+    grid-column: 1 / -1;
+  }
+
+  .hero__inner {
+    align-items: start;
+  }
+
+  .hero__figure img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .focus__figure {
+    margin-top: 0;
+  }
+
+  .focus__figure img,
+  .chapter__media img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .contact__figure img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .pullquote {
+    border-top-width: 2px;
+  }
+
+  .section-head__title,
+  .section-head__note {
+    grid-column: 2 / -1;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .principle {
+    row-gap: 0.75rem;
+  }
+
+  .principle__icon {
+    grid-column: 2 / 4;
+  }
+
+  .principle__title,
+  .principle__body {
+    grid-column: 3 / -1;
+  }
+
+  .plate,
+  .plate--wide,
+  .plate--half {
+    grid-column: span 6;
+  }
+
+  .ledger__row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    row-gap: 0.5rem;
+  }
+
+  .ledger__cat,
+  .ledger__title,
+  .ledger__body {
+    grid-column: 2;
+  }
+
+  .colophon__col {
+    grid-column: span 4;
+  }
+
+  /* Pinning needs a tall column of text beside the photograph. Once the
+     layout is single-column the photograph would cover the copy, so the
+     dark theme unpins and the beats return to normal height. */
+  [data-theme="dark"] .chapter__media,
+  [data-theme="dark"] .chapter:nth-of-type(even) .chapter__media {
+    position: static;
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  [data-theme="dark"] .chapter__beats,
+  [data-theme="dark"] .chapter:nth-of-type(even) .chapter__beats {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  [data-theme="dark"] .chapter__media img {
+    aspect-ratio: 16 / 10;
+  }
+
+  [data-theme="dark"] .beat {
+    min-height: 0;
+  }
+
+  [data-theme="dark"] .beat + .beat {
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --nav-height: 3.25rem;
+  }
+
+  .masthead__burger {
+    display: grid;
+  }
+
+  /* Off-canvas panel. visibility rather than display so the transition can
+     run and so focus cannot land inside a hidden link. */
+  .masthead__nav {
+    position: fixed;
+    inset: var(--nav-height) 0 auto;
+    background: var(--surface);
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 1rem var(--edge) 2rem;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.75rem;
+    transition:
+      opacity 0.25s ease,
+      translate 0.25s ease,
+      visibility 0.25s;
+  }
+
+  .masthead__nav[data-open] {
+    visibility: visible;
+    opacity: 1;
+    translate: none;
+  }
+
+  .masthead__nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .masthead__nav a {
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-head__num {
+    grid-column: 1 / -1;
+    padding-top: 0;
+  }
+
+  .section-head__title,
+  .section-head__note,
+  .chapter__beats,
+  .principle__title,
+  .principle__body,
+  .ledger__cat,
+  .ledger__title,
+  .ledger__body {
+    grid-column: 1 / -1;
+  }
+
+  .principle {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    row-gap: 0.85rem;
+  }
+
+  .principle__index,
+  .principle__icon {
+    grid-column: 1 / -1;
+  }
+
+  .principle__icon {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .ledger__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ledger__num {
+    grid-column: 1;
+  }
+
+  .stats {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .stat {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+  }
+
+  .stat:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .plate,
+  .plate--wide,
+  .plate--half,
+  .person,
+  .colophon__col {
+    grid-column: 1 / -1;
+  }
+
+  .chapter:first-of-type .beat:first-of-type > p:first-of-type::first-letter {
+    font-size: 3.4em;
+  }
+
+  .hero__dateline {
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .hero__dateline span::before {
+    content: none;
+    padding-right: 0;
+  }
+
+  .give__actions .btn {
+    justify-content: center;
+  }
+
+  /* Restated as shorthand so it also overrides the padding-left reset that
+     the light theme applies at this width. */
+  [data-theme="dark"] .stat {
+    border-top: 0;
+    padding: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  [data-theme="dark"] .hero__coords {
+    display: none;
+  }
+}

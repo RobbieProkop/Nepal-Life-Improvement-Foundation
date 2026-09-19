@@ -1,0 +1,85 @@
+/* ==========================================================================
+   404 — lost trail
+   One composition: brand, status, a short line, and a way home.
+   Tokens come from theme.css; this file only lays out the page.
+   ========================================================================== */
+
+body {
+  min-height: 100svh;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.65;
+}
+
+.lost {
+  display: grid;
+  align-content: center;
+  min-height: 100svh;
+  padding-block: calc(var(--nav-height) + 3rem) 4rem;
+}
+
+.lost__inner {
+  display: grid;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 38rem;
+}
+
+.lost__status {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lost__code {
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 18vw, 9rem);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--hero-tracking);
+  line-height: 0.9;
+  font-variation-settings: var(--display-variation);
+  color: var(--ink);
+}
+
+.lost__title {
+  font-family: var(--font-display);
+  font-size: var(--step-title);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  line-height: var(--display-leading);
+  font-variation-settings: var(--display-variation);
+  text-wrap: balance;
+}
+
+.lost__body {
+  max-width: 36ch;
+  color: var(--ink-soft);
+}
+
+.lost__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: 0.5rem;
+}
+
+/* Compact masthead for a page with no section nav. */
+.masthead__bar {
+  justify-content: space-between;
+}
+
+@media (max-width: 40rem) {
+  .lost__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lost__actions .btn {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Comparison page. Deliberately neutral — system fonts, no personality — so
+   it does not bias the three concepts it links to.
+   ========================================================================== */
+
+:root {
+  --bg: #fbfbfa;
+  --surface: #fff;
+  --ink: #1a1a19;
+  --muted: #6b6b68;
+  --line: #e2e2de;
+  --accent: #2b2b29;
+
+  --focus-ring: #1a1a19;
+  --skip-bg: #1a1a19;
+  --skip-fg: #fff;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.wrap {
+  width: min(100% - 2.5rem, 68rem);
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vw, 6rem);
+}
+
+.masthead {
+  max-width: 54ch;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.eyebrow {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin: 0.75rem 0 1rem;
+}
+
+.masthead p {
+  color: var(--muted);
+}
+
+.options {
+  display: grid;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.option {
+  display: grid;
+  grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  transition:
+    border-color 0.2s ease,
+    translate 0.2s ease;
+}
+
+.option:hover {
+  border-color: var(--accent);
+  translate: 0 -2px;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  height: 4.5rem;
+  border: 1px solid var(--line);
+}
+
+/* Two stacked strips, for the combined build that carries both palettes. */
+.swatch-pair {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.swatch-pair .swatches {
+  height: 2.6rem;
+}
+
+.option--featured {
+  border-width: 2px;
+  border-color: var(--ink);
+}
+
+.option--featured .option__letter {
+  color: var(--ink);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.25rem, 2.5vw, 2rem);
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.option__letter {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.option h2 {
+  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin-bottom: 0.65rem;
+}
+
+.option p {
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.option dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.3rem 1rem;
+  margin: 1.25rem 0 1.5rem;
+  font-size: 0.9rem;
+}
+
+.option dt {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.2rem;
+}
+
+.option dd {
+  margin: 0;
+}
+
+.view {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.8rem 1.25rem;
+  background: var(--ink);
+  color: var(--bg);
+  transition: background 0.2s ease;
+}
+
+.view::after {
+  content: "\2192";
+  transition: translate 0.2s ease;
+}
+
+.view:hover {
+  background: #000;
+}
+
+.view:hover::after {
+  translate: 3px 0;
+}
+
+.footnote {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.footnote a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+}
+
+@media (max-width: 48rem) {
+  .option {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .swatches {
+    height: 3rem;
+  }
+}

@@ -1,0 +1,1296 @@
+/* ==========================================================================
+   DIRECTION C — ASCENT
+   A low-saturation, cinematic system built around the idea of a climb: the
+   story is told as chapters that pin in place while you scroll past them,
+   and the history is a horizontal traverse. Topographic contour lines are
+   generated in CSS rather than loaded as images.
+   ========================================================================== */
+
+:root {
+  --abyss: #0b1116;
+  --slate-900: #0f171d;
+  --slate-800: #16212a;
+  --slate-700: #1e2d38;
+  --hairline: rgba(230, 238, 241, 0.12);
+  --hairline-strong: rgba(230, 238, 241, 0.24);
+
+  --glacier: #e6eef1;
+  --fog: #93a8b3;
+  --contour: #5f9a82;
+  --ember: #d99a5b;
+
+  --font-display: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-body: "Space Grotesk", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --step-hero: clamp(2.7rem, 7.5vw, 6.5rem);
+  --step-title: clamp(2rem, 4vw, 3.4rem);
+  --step-sub: clamp(1.4rem, 2.2vw, 2rem);
+  --step-body: clamp(1.02rem, 1.05vw, 1.15rem);
+  --step-meta: 0.75rem;
+
+  --shell: 80rem;
+  --edge: clamp(1.25rem, 4.5vw, 3.5rem);
+  --gutter: clamp(1.25rem, 2.4vw, 2.5rem);
+  --nav-height: 3.5rem;
+  --band: clamp(5rem, 10vw, 9rem);
+
+  --focus-ring: var(--contour);
+  --skip-bg: var(--glacier);
+  --skip-fg: var(--abyss);
+
+  --lb-theme-backdrop: rgba(11, 17, 22, 0.97);
+  --lb-theme-surface: #0f171d;
+  --lb-theme-fg: #e6eef1;
+  --lb-theme-accent: #5f9a82;
+  --lb-theme-radius: 0;
+}
+
+body {
+  background: var(--abyss);
+  color: var(--glacier);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.65;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.shell {
+  width: min(100% - 2 * var(--edge), var(--shell));
+  margin-inline: auto;
+}
+
+.band {
+  padding-block: var(--band);
+}
+
+.band + .band {
+  border-top: 1px solid var(--hairline);
+}
+
+/* --------------------------------------------------------------------------
+   Topographic ground
+   Concentric rings at three different origins and spacings read convincingly
+   as contour lines, with no image request and no SVG to maintain.
+   -------------------------------------------------------------------------- */
+
+.topo {
+  position: relative;
+  isolation: isolate;
+}
+
+.topo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    repeating-radial-gradient(
+      circle at 16% 18%,
+      transparent 0 44px,
+      rgba(95, 154, 130, 0.14) 44px 45px
+    ),
+    repeating-radial-gradient(
+      circle at 82% 72%,
+      transparent 0 60px,
+      rgba(95, 154, 130, 0.1) 60px 61px
+    ),
+    repeating-radial-gradient(
+      circle at 45% 112%,
+      transparent 0 86px,
+      rgba(95, 154, 130, 0.07) 86px 87px
+    );
+  /* Fades the pattern out at the edges so bands do not end in a hard seam. */
+  mask-image: radial-gradient(
+    ellipse 120% 90% at 50% 40%,
+    #000 35%,
+    transparent 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Masthead with a reading-progress rail
+   -------------------------------------------------------------------------- */
+
+.deck {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  background: color-mix(in srgb, var(--abyss) 82%, transparent);
+  backdrop-filter: blur(12px) saturate(1.2);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.deck.is-scrolled {
+  border-bottom-color: var(--hairline);
+}
+
+.deck__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--nav-height);
+}
+
+.deck__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  /* Holds the logo hard left so the links, burger and theme switch all cluster
+     on the right, at both breakpoints. */
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.deck__logo::before {
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--contour);
+  /* A small triangle: the summit marker that runs through the design. */
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.deck__nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1.5vw, 1.75rem);
+}
+
+.deck__nav a {
+  position: relative;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fog);
+  padding-block: 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.deck__nav a:hover,
+.deck__nav a.is-current {
+  color: var(--glacier);
+}
+
+/* Marks the section currently filling the viewport. */
+.deck__nav a.is-current::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0.15rem;
+  height: 1px;
+  background: var(--contour);
+}
+
+.deck__toggle {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+}
+
+/* Hands the reader over to the Field Journal mockup. */
+.deck__switch {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--fog);
+  border: 1px solid var(--hairline);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.deck__switch:hover {
+  color: var(--glacier);
+  border-color: var(--contour);
+}
+
+.deck__switch svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.deck__toggle-bars,
+.deck__toggle-bars::before,
+.deck__toggle-bars::after {
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--glacier);
+  transition: transform 0.3s ease;
+}
+
+.deck__toggle-bars::before,
+.deck__toggle-bars::after {
+  content: "";
+  position: relative;
+}
+
+.deck__toggle-bars::before {
+  top: -6px;
+}
+
+.deck__toggle-bars::after {
+  top: 5px;
+}
+
+.deck__toggle[aria-expanded="true"] .deck__toggle-bars {
+  background: transparent;
+}
+
+.deck__toggle[aria-expanded="true"] .deck__toggle-bars::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.deck__toggle[aria-expanded="true"] .deck__toggle-bars::after {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.rail {
+  position: absolute;
+  inset: auto 0 0;
+  height: 2px;
+  background: var(--hairline);
+}
+
+/* site.js writes --progress as a 0–1 ratio; scaling avoids a layout-thrashing
+   width change on every scroll frame. */
+.rail::before {
+  content: "";
+  display: block;
+  height: 100%;
+  background: var(--contour);
+  transform-origin: left center;
+  scale: var(--progress, 0) 1;
+}
+
+/* --------------------------------------------------------------------------
+   Metadata type
+   -------------------------------------------------------------------------- */
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+.tag--contour {
+  color: var(--contour);
+}
+
+.tag--ember {
+  color: var(--ember);
+}
+
+/* --------------------------------------------------------------------------
+   Section headings — elevation markers
+   -------------------------------------------------------------------------- */
+
+.marker {
+  display: grid;
+  gap: 1.1rem;
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.marker__row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* The hairline runs out to the edge of the shell, like a contour label. */
+.marker__row::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
+}
+
+.marker__title {
+  font-size: var(--step-title);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.marker__note {
+  max-width: 52ch;
+  color: var(--fog);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.act {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.5rem;
+  background: var(--glacier);
+  color: var(--abyss);
+  border: 1px solid var(--glacier);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.act::after {
+  content: "\2197";
+  transition: translate 0.25s ease;
+}
+
+.act:hover::after {
+  translate: 3px -3px;
+}
+
+.act:hover {
+  background: var(--contour);
+  border-color: var(--contour);
+  color: var(--abyss);
+}
+
+.act--ghost {
+  background: transparent;
+  color: var(--glacier);
+  border-color: var(--hairline-strong);
+}
+
+.act--ghost:hover {
+  background: transparent;
+  border-color: var(--contour);
+  color: var(--contour);
+}
+
+/* --------------------------------------------------------------------------
+   Summit — the hero
+   -------------------------------------------------------------------------- */
+
+.summit {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.summit__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.summit__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.55) contrast(1.1) brightness(0.72);
+  scale: 1.06;
+  /* A very slow drift keeps the frame alive without demanding attention. */
+  animation: summitDrift 26s ease-in-out infinite alternate;
+}
+
+@keyframes summitDrift {
+  to {
+    scale: 1.14;
+  }
+}
+
+.summit__veil {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(11, 17, 22, 0.7) 0%,
+      rgba(11, 17, 22, 0.35) 35%,
+      rgba(11, 17, 22, 0.88) 100%
+    ),
+    /* Faint vertical hairlines, like a survey overlay. */
+    repeating-linear-gradient(
+        90deg,
+        rgba(230, 238, 241, 0.05) 0 1px,
+        transparent 1px calc(100% / 6)
+      );
+}
+
+.summit__inner {
+  padding-block: clamp(3rem, 8vh, 7rem) clamp(4rem, 12vh, 8rem);
+}
+
+.summit__title {
+  font-size: var(--step-hero);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  max-width: 20ch;
+  text-wrap: balance;
+  margin-top: 1.5rem;
+}
+
+.summit__title em {
+  font-style: normal;
+  color: var(--contour);
+}
+
+.summit__body {
+  max-width: 46ch;
+  margin-top: 1.75rem;
+  color: color-mix(in srgb, var(--glacier) 82%, transparent);
+  font-size: clamp(1.05rem, 1.25vw, 1.25rem);
+}
+
+.summit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+
+/* Coordinates set vertically along the left edge. */
+.summit__coords {
+  position: absolute;
+  left: clamp(0.5rem, 1.5vw, 1.25rem);
+  top: 50%;
+  translate: 0 -50%;
+  writing-mode: vertical-rl;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--glacier) 55%, transparent);
+}
+
+.summit__cue {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+.summit__cue::after {
+  content: "";
+  width: 4rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--contour), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Readout — the numbers, as survey data
+   -------------------------------------------------------------------------- */
+
+.readout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.readout > div {
+  background: var(--abyss);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  display: grid;
+  gap: 0.5rem;
+}
+
+.readout__value {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.readout__value span {
+  color: var(--contour);
+}
+
+/* --------------------------------------------------------------------------
+   Approach — hairline rows
+   -------------------------------------------------------------------------- */
+
+.tiers {
+  border-top: 1px solid var(--hairline);
+}
+
+.tier {
+  display: grid;
+  grid-template-columns: 4rem 3rem minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: var(--gutter);
+  align-items: start;
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-bottom: 1px solid var(--hairline);
+  transition: background 0.3s ease;
+}
+
+.tier:hover {
+  background: color-mix(in srgb, var(--glacier) 3%, transparent);
+}
+
+.tier__elev {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.1em;
+  color: var(--contour);
+  padding-top: 0.4rem;
+}
+
+.tier__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  /* Source icons are dark line art; inverting suits the dark ground. */
+  filter: brightness(0) invert(1);
+  opacity: 0.5;
+}
+
+.tier__title {
+  font-size: var(--step-sub);
+  text-wrap: balance;
+}
+
+.tier__body {
+  color: var(--fog);
+  max-width: 54ch;
+}
+
+.tier__body .act {
+  margin-top: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Chapters — the pinned story
+   Each chapter keeps its own photograph fixed while its text scrolls past,
+   using plain position:sticky so it behaves identically in every browser.
+   -------------------------------------------------------------------------- */
+
+.chapter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.chapter + .chapter {
+  margin-top: clamp(3rem, 6vw, 6rem);
+}
+
+/* Alternating sides stop the three chapters from feeling like one long column. */
+.chapter:nth-of-type(even) .chapter__media {
+  order: 2;
+}
+
+.chapter__media {
+  position: sticky;
+  top: calc(var(--nav-height) + clamp(1.5rem, 4vh, 3rem));
+  margin: 0;
+}
+
+.chapter__media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* filter: saturate(0.6) contrast(1.08) brightness(0.88); */
+}
+
+.chapter__media figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fog);
+  border-top: 1px solid var(--hairline);
+  margin-top: 0.75rem;
+  padding-top: 0.6rem;
+}
+
+.beat {
+  min-height: 62svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.beat__year {
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--contour);
+  margin-bottom: 1.25rem;
+}
+
+.beat__title {
+  font-size: var(--step-sub);
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+
+.beat p {
+  color: var(--fog);
+  max-width: 48ch;
+}
+
+.beat p + p {
+  margin-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Traverse — the horizontal project timeline
+   -------------------------------------------------------------------------- */
+
+.traverse {
+  display: flex;
+  gap: var(--gutter);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1.75rem;
+  /* Lets the track run to the viewport edge while staying shell-aligned. */
+  margin-inline: calc(-1 * var(--edge));
+  padding-inline: var(--edge);
+  scrollbar-color: var(--contour) var(--slate-800);
+  scrollbar-width: thin;
+}
+
+.traverse:focus-visible {
+  outline-offset: -3px;
+}
+
+.milestone {
+  flex: 0 0 clamp(15rem, 26vw, 21rem);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--hairline-strong);
+  position: relative;
+}
+
+/* The summit marker that sits on the timeline rule. */
+.milestone::before {
+  content: "";
+  position: absolute;
+  top: -0.3rem;
+  left: 0;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: var(--contour);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.milestone__year {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  color: var(--ember);
+}
+
+.milestone__title {
+  font-size: 1.2rem;
+  line-height: 1.15;
+}
+
+.milestone p {
+  font-size: 0.93rem;
+  color: var(--fog);
+}
+
+.milestone__cat {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+.traverse-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+/* --------------------------------------------------------------------------
+   Gallery
+   -------------------------------------------------------------------------- */
+
+.survey {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+}
+
+.frame {
+  margin: 0;
+  position: relative;
+  grid-column: span 4;
+  background: var(--slate-900);
+}
+
+.frame--wide {
+  grid-column: span 8;
+}
+.frame--half {
+  grid-column: span 6;
+}
+
+.frame a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.frame--tall a {
+  aspect-ratio: 3 / 4;
+}
+
+.frame--pano a {
+  aspect-ratio: 16 / 9;
+}
+
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* filter: saturate(0.5) contrast(1.05) brightness(0.8); */
+  transition:
+    filter 0.5s ease,
+    scale 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.frame a:hover img,
+.frame a:focus-visible img {
+  filter: saturate(1) contrast(1.02) brightness(1);
+  scale: 1.04;
+}
+
+.frame figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--glacier);
+  background: linear-gradient(0deg, rgba(11, 17, 22, 0.92), transparent);
+  opacity: 0;
+  translate: 0 0.5rem;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease;
+  pointer-events: none;
+}
+
+.frame:hover figcaption,
+.frame:focus-within figcaption {
+  opacity: 1;
+  translate: none;
+}
+
+/* Captions must not be hover-only on touch, where there is no hover. */
+@media (hover: none) {
+  .frame figcaption {
+    opacity: 1;
+    translate: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Focus
+   -------------------------------------------------------------------------- */
+
+.basecamp {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.basecamp__media img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* filter: saturate(0.6) contrast(1.08) brightness(0.9); */
+}
+
+.basecamp__title {
+  font-size: var(--step-title);
+  margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+
+.basecamp p {
+  color: var(--fog);
+  max-width: 54ch;
+}
+
+.basecamp p + p {
+  margin-top: 1rem;
+}
+
+.manifest {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.manifest li {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.7rem 0.75rem 0.7rem 0;
+  border-bottom: 1px solid var(--hairline);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--fog);
+}
+
+.manifest li::before {
+  content: "";
+  flex: none;
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--contour);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Give — a bright panel against the dark
+   -------------------------------------------------------------------------- */
+
+.cache {
+  background: var(--glacier);
+  color: var(--abyss);
+  --focus-ring: var(--abyss);
+}
+
+.cache__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.cache__title {
+  font-size: var(--step-title);
+  margin-bottom: 1.25rem;
+}
+
+.cache p {
+  color: color-mix(in srgb, var(--abyss) 72%, var(--glacier));
+  max-width: 44ch;
+}
+
+.cache .tag {
+  color: color-mix(in srgb, var(--abyss) 60%, var(--glacier));
+}
+
+.cache__actions {
+  display: grid;
+  gap: 1rem;
+}
+
+.cache__actions .act {
+  justify-content: space-between;
+  width: 100%;
+  background: var(--abyss);
+  border-color: var(--abyss);
+  color: var(--glacier);
+}
+
+.cache__actions .act:hover {
+  background: var(--contour);
+  border-color: var(--contour);
+  color: var(--abyss);
+}
+
+.cache__actions .act--ghost {
+  background: transparent;
+  color: var(--abyss);
+  border-color: color-mix(in srgb, var(--abyss) 30%, transparent);
+}
+
+.cache__actions .act--ghost:hover {
+  background: var(--abyss);
+  border-color: var(--abyss);
+  color: var(--glacier);
+}
+
+.cache__note {
+  border-top: 1px solid color-mix(in srgb, var(--abyss) 18%, transparent);
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.7;
+}
+
+.cache__note p + p {
+  margin-top: 0.6rem;
+}
+
+.cache__note a {
+  border-bottom: 1px solid currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Team
+   -------------------------------------------------------------------------- */
+
+.roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+}
+
+.roster figure {
+  margin: 0;
+  background: var(--abyss);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.roster img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  /* filter: saturate(0.5) contrast(1.05) brightness(0.85); */
+  transition: filter 0.4s ease;
+}
+
+.roster figure:hover img {
+  filter: saturate(1) brightness(1);
+}
+
+.roster figcaption {
+  padding-top: 1.1rem;
+}
+
+.roster__name {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.roster__role {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fog);
+  margin-top: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   Contact
+   -------------------------------------------------------------------------- */
+
+.signal {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.signal__media img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: saturate(0.5) contrast(1.05) brightness(0.85);
+}
+
+.line-field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.line-field label {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fog);
+}
+
+.line-field input,
+.line-field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--glacier);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hairline-strong);
+  padding: 0.65rem 0;
+  transition: border-color 0.25s ease;
+}
+
+.line-field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.line-field input:hover,
+.line-field textarea:hover {
+  border-bottom-color: var(--fog);
+}
+
+.line-field input:focus,
+.line-field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--contour);
+}
+
+/* --------------------------------------------------------------------------
+   Film
+   -------------------------------------------------------------------------- */
+
+.reel {
+  aspect-ratio: 16 / 9;
+  background: var(--slate-900);
+  border: 1px solid var(--hairline);
+}
+
+.reel iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+.basecamp-footer {
+  border-top: 1px solid var(--hairline);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+
+.basecamp-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 2.25rem;
+}
+
+.basecamp-footer__brand {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.basecamp-footer__brand + p {
+  margin-top: 1rem;
+}
+
+.basecamp-footer h2 {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--contour);
+  margin-bottom: 0.85rem;
+}
+
+.basecamp-footer__col {
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  font-size: 0.9rem;
+  color: var(--fog);
+}
+
+.basecamp-footer__col a:hover {
+  color: var(--glacier);
+}
+
+.basecamp-footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  border-top: 1px solid var(--hairline);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 64rem) {
+  .chapter,
+  .basecamp,
+  .cache__inner,
+  .signal {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Sticky pinning needs a tall viewport beside the text. Once the layout
+     is single-column the photo would cover the copy, so it unpins. */
+  .chapter__media {
+    position: static;
+  }
+
+  .chapter:nth-of-type(even) .chapter__media {
+    order: 0;
+  }
+
+  .chapter__media img,
+  .basecamp__media img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .signal__media img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .beat {
+    min-height: 0;
+  }
+
+  .tier {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+    row-gap: 0.75rem;
+  }
+
+  .tier__icon {
+    grid-column: 2;
+  }
+
+  .tier__title,
+  .tier__body {
+    grid-column: 2;
+  }
+
+  .frame,
+  .frame--wide,
+  .frame--half {
+    grid-column: span 6;
+  }
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --nav-height: 3.25rem;
+  }
+
+  .deck__toggle {
+    display: grid;
+  }
+
+  .deck__nav {
+    position: fixed;
+    inset: var(--nav-height) 0 auto;
+    background: var(--slate-900);
+    border-bottom: 1px solid var(--hairline);
+    padding: 0.75rem var(--edge) 1.5rem;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.5rem;
+    transition:
+      opacity 0.25s ease,
+      translate 0.25s ease,
+      visibility 0.25s;
+  }
+
+  .deck__nav[data-open] {
+    visibility: visible;
+    opacity: 1;
+    translate: none;
+  }
+
+  .deck__nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .deck__nav a {
+    padding-block: 0.95rem;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .summit__coords {
+    display: none;
+  }
+
+  .tier {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tier__icon,
+  .tier__title,
+  .tier__body {
+    grid-column: 1;
+  }
+
+  .frame,
+  .frame--wide,
+  .frame--half {
+    grid-column: span 12;
+  }
+}

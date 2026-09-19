@@ -1,0 +1,177 @@
+/* ==========================================================================
+   Structural styling for the native <dialog> lightbox in js/lightbox.js.
+   Each design themes it by setting the --lb-* custom properties on :root.
+   ========================================================================== */
+
+.lb {
+  /* Fall back to a neutral dark theme if a design forgets to set these. */
+  --lb-backdrop: var(--lb-theme-backdrop, rgba(8, 10, 12, 0.94));
+  --lb-surface: var(--lb-theme-surface, #0b0e10);
+  --lb-fg: var(--lb-theme-fg, #f4f2ee);
+  --lb-accent: var(--lb-theme-accent, #f4f2ee);
+  --lb-radius: var(--lb-theme-radius, 0);
+
+  width: 100vw;
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: var(--lb-fg);
+  overflow: hidden;
+}
+
+.lb::backdrop {
+  background: var(--lb-backdrop);
+  backdrop-filter: blur(6px);
+}
+
+.lb[open] {
+  display: grid;
+  place-items: center;
+}
+
+.lb[open] .lb__figure {
+  animation: lbEnter 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes lbEnter {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+.lb__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: clamp(1rem, 4vw, 3.5rem);
+  /* Keeps the caption clear of the previous/next buttons on narrow screens. */
+  padding-bottom: clamp(4.5rem, 10vh, 6rem);
+}
+
+.lb__figure {
+  display: grid;
+  gap: 0.85rem;
+  justify-items: center;
+  max-width: min(100%, 1400px);
+  margin: 0;
+}
+
+.lb__img {
+  max-width: 100%;
+  /* Reserve room for the caption row so tall photos never clip it. */
+  max-height: calc(100dvh - 12rem);
+  width: auto;
+  object-fit: contain;
+  border-radius: var(--lb-radius);
+  background: var(--lb-surface);
+}
+
+.lb__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.35rem 1rem;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lb__caption {
+  font-weight: 600;
+}
+
+.lb__count {
+  opacity: 0.6;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Controls ---------------------------------------------------------------- */
+
+.lb__nav,
+.lb__close {
+  position: fixed;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  color: var(--lb-fg);
+  border: 1px solid color-mix(in srgb, var(--lb-fg) 35%, transparent);
+  border-radius: var(--lb-radius);
+  background: color-mix(in srgb, var(--lb-surface) 70%, transparent);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    scale 0.2s ease;
+}
+
+.lb__nav:hover,
+.lb__close:hover {
+  background: var(--lb-accent);
+  color: var(--lb-surface);
+  scale: 1.06;
+}
+
+.lb__nav[hidden] {
+  display: none;
+}
+
+/* Glyphs come from CSS so the JS stays free of presentation concerns. */
+.lb__nav::before,
+.lb__close::before {
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.lb__nav--prev {
+  left: clamp(0.75rem, 2vw, 2rem);
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.lb__nav--prev::before {
+  content: "\2190";
+}
+
+.lb__nav--next {
+  right: clamp(0.75rem, 2vw, 2rem);
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.lb__nav--next::before {
+  content: "\2192";
+}
+
+.lb__close {
+  top: clamp(0.75rem, 2vw, 2rem);
+  right: clamp(0.75rem, 2vw, 2rem);
+}
+
+.lb__close::before {
+  content: "\2715";
+}
+
+/* On phones the side buttons would sit on top of the photo, so they move to
+   a thumb-reachable row at the bottom instead. */
+@media (max-width: 40rem) {
+  .lb__nav--prev,
+  .lb__nav--next {
+    top: auto;
+    bottom: clamp(0.75rem, 3vw, 1.5rem);
+    translate: none;
+  }
+
+  .lb__nav--prev {
+    left: 25%;
+  }
+
+  .lb__nav--next {
+    right: 25%;
+  }
+}

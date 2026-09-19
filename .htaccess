@@ -1,0 +1,3 @@
+# Custom error page. Harmless on hosts that ignore .htaccess (GitHub Pages,
+# Netlify, and similar already serve /404.html for missing URLs on their own).
+ErrorDocument 404 /404.html

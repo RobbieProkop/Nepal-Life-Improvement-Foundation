@@ -1,0 +1,1407 @@
+/* ==========================================================================
+   DIRECTION A — FIELD JOURNAL
+   A documentary/editorial system. Rules and typographic hierarchy carry the
+   layout instead of cards, shadows and rounded corners. Warm paper ground,
+   ink text, a single marigold accent, monospace for anything that behaves
+   like metadata (labels, captions, credits, figures).
+   ========================================================================== */
+
+:root {
+  /* Ground and ink -------------------------------------------------------- */
+  --paper: #f3eee4;
+  --paper-deep: #e8e0d1;
+  --paper-edge: #dcd2bf;
+  --ink: #17140f;
+  --ink-soft: #4b443a;
+  --ink-faint: #8a8072;
+
+  /* Accents. Marigold for emphasis, Begnas teal used sparingly. */
+  --marigold: #bf4f18;
+  --marigold-deep: #993d10;
+  --teal: #1c5b64;
+
+  --rule: color-mix(in srgb, var(--ink) 16%, transparent);
+  --rule-strong: color-mix(in srgb, var(--ink) 38%, transparent);
+
+  /* Type ------------------------------------------------------------------ */
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --step-hero: clamp(2.9rem, 8.5vw, 7rem);
+  --step-title: clamp(2rem, 4.4vw, 3.5rem);
+  --step-sub: clamp(1.35rem, 2.2vw, 1.9rem);
+  --step-body: clamp(1.02rem, 1.05vw, 1.15rem);
+  --step-meta: 0.76rem;
+
+  /* Layout ---------------------------------------------------------------- */
+  --shell: 84rem;
+  --edge: clamp(1.25rem, 4.5vw, 3.75rem);
+  --gutter: clamp(1rem, 1.9vw, 1.75rem);
+  --nav-height: 3.75rem;
+  --band: clamp(4.5rem, 9vw, 8rem);
+
+  --focus-ring: var(--marigold);
+  --skip-bg: var(--ink);
+  --skip-fg: var(--paper);
+
+  /* Lightbox theme */
+  --lb-theme-backdrop: rgba(23, 20, 15, 0.95);
+  --lb-theme-surface: #17140f;
+  --lb-theme-fg: #f3eee4;
+  --lb-theme-accent: #e3a04f;
+  --lb-theme-radius: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-body);
+  line-height: 1.6;
+}
+
+/* A faint paper tooth over the whole page. Generated rather than an image
+   request, and pointer-events:none so it never intercepts clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-variation-settings: "opsz" 96;
+}
+
+em {
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   Layout primitives
+   -------------------------------------------------------------------------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+  width: min(100% - 2 * var(--edge), var(--shell));
+  margin-inline: auto;
+}
+
+.band {
+  padding-block: var(--band);
+}
+
+/* A hairline that spans the text column, used to open a section. */
+.rule {
+  border: 0;
+  border-top: 1px solid var(--rule-strong);
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Metadata type — the monospace voice of the design
+   -------------------------------------------------------------------------- */
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.meta--ink {
+  color: var(--ink-soft);
+}
+
+.meta--accent {
+  color: var(--marigold);
+}
+
+figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  line-height: 1.5;
+  padding-top: 0.7rem;
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Masthead — a newspaper nameplate, not a floating translucent pill
+   -------------------------------------------------------------------------- */
+
+.masthead {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule);
+  transition: border-color 0.3s ease;
+}
+
+.masthead.is-scrolled {
+  border-bottom-color: var(--rule-strong);
+}
+
+.masthead__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: var(--nav-height);
+  width: min(100% - 2 * var(--edge), var(--shell));
+  margin-inline: auto;
+}
+
+.masthead__logo {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  /* Holds the nameplate hard left so the links, burger and theme switch all
+     cluster on the right, at both breakpoints. */
+  margin-right: auto;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.masthead__logo span {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.masthead__nav ul {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.8vw, 2rem);
+}
+
+.masthead__nav a {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-block: 0.4rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.masthead__nav a:hover {
+  color: var(--ink);
+  border-bottom-color: var(--marigold);
+}
+
+.masthead__toggle {
+  display: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+}
+
+/* Hands the reader over to the Ascent mockup. Being the last item in the bar,
+   it carries the negative margin that optically aligns the row with the page
+   edge. */
+.masthead__switch {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-right: -0.4rem;
+  color: var(--ink-faint);
+  border: 1px solid var(--rule);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.masthead__switch:hover {
+  color: var(--ink);
+  border-color: var(--marigold);
+}
+
+.masthead__switch svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.masthead__toggle-bars,
+.masthead__toggle-bars::before,
+.masthead__toggle-bars::after {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--ink);
+  transition:
+    transform 0.3s ease,
+    opacity 0.2s ease;
+}
+
+.masthead__toggle-bars::before,
+.masthead__toggle-bars::after {
+  content: "";
+  position: relative;
+}
+
+.masthead__toggle-bars::before {
+  top: -7px;
+}
+
+.masthead__toggle-bars::after {
+  top: 5.5px;
+}
+
+.masthead__toggle[aria-expanded="true"] .masthead__toggle-bars {
+  background: transparent;
+}
+
+.masthead__toggle[aria-expanded="true"] .masthead__toggle-bars::before {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.masthead__toggle[aria-expanded="true"] .masthead__toggle-bars::after {
+  transform: translateY(-5.5px) rotate(-45deg);
+}
+
+/* --------------------------------------------------------------------------
+   Section headers — numbered, ruled, asymmetric
+   -------------------------------------------------------------------------- */
+
+.section-head {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  row-gap: 1rem;
+}
+
+.section-head__num {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--marigold);
+  padding-top: 0.6rem;
+}
+
+.section-head__title {
+  grid-column: 2 / 9;
+  font-size: var(--step-title);
+}
+
+.section-head__note {
+  grid-column: 10 / -1;
+  align-self: end;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  line-height: 1.6;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons — square, typographic
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.5rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.btn::after {
+  content: "\2192";
+  transition: translate 0.2s ease;
+}
+
+.btn:hover::after {
+  translate: 4px 0;
+}
+
+.btn:hover {
+  background: var(--marigold);
+  border-color: var(--marigold);
+  color: var(--paper);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--ink);
+}
+
+.btn--outline:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* A text link that behaves like a button but keeps the editorial voice. */
+.arrow-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.35rem;
+  border-bottom: 1.5px solid var(--ink);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.arrow-link::after {
+  content: "\2192";
+  transition: translate 0.2s ease;
+}
+
+.arrow-link:hover {
+  color: var(--marigold);
+  border-bottom-color: var(--marigold);
+}
+
+.arrow-link:hover::after {
+  translate: 4px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Hero / lede
+   -------------------------------------------------------------------------- */
+
+.lede {
+  padding-top: calc(var(--nav-height) + clamp(2.5rem, 7vw, 6rem));
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: end;
+}
+
+.lede__text {
+  grid-column: 1 / 8;
+}
+
+.dateline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-bottom: 1.6rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.dateline span::before {
+  content: "\00B7";
+  padding-right: 0.9rem;
+  color: var(--rule-strong);
+}
+
+.lede__title {
+  font-size: var(--step-hero);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.lede__title em {
+  color: var(--marigold);
+  font-variation-settings: "opsz" 144;
+}
+
+.lede__body {
+  max-width: 44ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1.08rem, 1.3vw, 1.3rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.lede__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem 2rem;
+  margin-top: 2.5rem;
+}
+
+.lede__figure {
+  grid-column: 9 / -1;
+  margin: 0;
+}
+
+.lede__figure img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  /* A touch of warmth so photos sit on the paper rather than on top of it. */
+  filter: saturate(0.92) contrast(1.02);
+}
+
+/* --------------------------------------------------------------------------
+   Ledger — the numbers, set as a ruled row rather than four cards
+   -------------------------------------------------------------------------- */
+
+.ledger {
+  border-block: 1px solid var(--rule-strong);
+  padding-block: clamp(1.75rem, 3vw, 2.75rem);
+  row-gap: 2rem;
+}
+
+.ledger__item {
+  grid-column: span 3;
+  display: grid;
+  gap: 0.4rem;
+  padding-left: clamp(0.75rem, 1.5vw, 1.25rem);
+  border-left: 1px solid var(--rule);
+}
+
+.ledger__item:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.ledger__value {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.5vw, 3.75rem);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger__value sup {
+  font-size: 0.4em;
+  vertical-align: super;
+  color: var(--marigold);
+}
+
+/* --------------------------------------------------------------------------
+   Principles — a numbered definition list, not three icon columns
+   -------------------------------------------------------------------------- */
+
+.principles {
+  row-gap: 0;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.principle {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: start;
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-top: 1px solid var(--rule);
+}
+
+.principle:last-of-type {
+  border-bottom: 1px solid var(--rule);
+}
+
+.principle__index {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding-top: 0.5rem;
+}
+
+.principle__icon {
+  grid-column: 2 / 3;
+  width: 2.75rem;
+  height: 2.75rem;
+  opacity: 0.55;
+}
+
+.principle__title {
+  grid-column: 3 / 8;
+  font-size: var(--step-sub);
+  text-wrap: balance;
+}
+
+.principle__body {
+  grid-column: 8 / -1;
+  color: var(--ink-soft);
+  max-width: 52ch;
+}
+
+.principle__body .arrow-link {
+  margin-top: 1.25rem;
+}
+
+/* --------------------------------------------------------------------------
+   Story — editorial prose with a drop cap and a marginal pull quote
+   -------------------------------------------------------------------------- */
+
+.story {
+  row-gap: clamp(2rem, 4vw, 3.5rem);
+}
+
+.story__figure {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.story__figure img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.prose {
+  grid-column: 3 / 9;
+  display: grid;
+  gap: 1.15rem;
+}
+
+.prose p {
+  color: var(--ink-soft);
+  max-width: 62ch;
+}
+
+.prose > p:first-of-type::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-size: 4.1em;
+  font-weight: 600;
+  line-height: 0.76;
+  padding: 0.05em 0.1em 0 0;
+  color: var(--marigold);
+}
+
+.pullquote {
+  grid-column: 9 / -1;
+  align-self: start;
+  margin: 0;
+  padding-top: 0.5rem;
+  border-top: 2px solid var(--ink);
+}
+
+.pullquote blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1.9vw, 1.7rem);
+  font-weight: 600;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  padding-top: 1rem;
+  margin: 0;
+}
+
+.pullquote figcaption {
+  padding-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Focus — deliberately off-balance: the photo hangs lower than the text
+   -------------------------------------------------------------------------- */
+
+.focus {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.focus__figure {
+  grid-column: 1 / 6;
+  margin: 0;
+  /* The offset is the point of the section; it collapses on narrow screens. */
+  margin-top: clamp(0rem, 6vw, 5rem);
+}
+
+.focus__figure img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: saturate(0.92) contrast(1.02);
+}
+
+.focus__text {
+  grid-column: 7 / -1;
+}
+
+.focus__title {
+  font-size: var(--step-title);
+  text-wrap: balance;
+}
+
+.focus__text > p {
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin-top: 1.25rem;
+}
+
+.programme__title {
+  margin-top: 2rem;
+}
+
+.focus__more {
+  margin-top: 2rem;
+}
+
+/* The workshop programme, set as a ruled two-column index. */
+.programme {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--rule);
+}
+
+.programme li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  padding: 0.7rem 0.5rem 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.programme li::before {
+  content: "\2014";
+  color: var(--marigold);
+  flex: none;
+}
+
+/* --------------------------------------------------------------------------
+   Gallery — asymmetric spans with real captions, no uniform tiles
+   -------------------------------------------------------------------------- */
+
+.gallery {
+  row-gap: clamp(1.5rem, 3vw, 2.5rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.plate {
+  margin: 0;
+  grid-column: span 4;
+}
+
+.plate a {
+  display: block;
+  overflow: hidden;
+  background: var(--paper-deep);
+  /* Default crop; the --wide/--tall/--pano/--square modifiers override it.
+     Declaring it here keeps a plate from collapsing if a modifier is
+     forgotten, and reserves the box so photos cause no layout shift. */
+  aspect-ratio: 4 / 3;
+}
+
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.03);
+  transition:
+    scale 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.5s ease;
+}
+
+.plate a:hover img {
+  scale: 1.04;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.plate figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+  margin-top: 0.7rem;
+  padding-top: 0.6rem;
+}
+
+.plate a:hover + figcaption,
+.plate a:focus-visible + figcaption {
+  color: var(--ink);
+}
+
+/* Varied spans and crops are what stop this reading as a tile grid. */
+.plate--wide {
+  grid-column: span 8;
+}
+.plate--half {
+  grid-column: span 6;
+}
+.plate--tall a {
+  aspect-ratio: 3 / 4;
+}
+.plate--pano a {
+  aspect-ratio: 16 / 9;
+}
+.plate--square a {
+  aspect-ratio: 1;
+}
+.plate--offset {
+  margin-top: clamp(0rem, 4vw, 3.5rem);
+}
+
+/* --------------------------------------------------------------------------
+   Donate — a full-bleed marigold band
+   -------------------------------------------------------------------------- */
+
+.give {
+  background: var(--marigold);
+  color: var(--paper);
+  --focus-ring: var(--paper);
+}
+
+.give__inner {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.give__lead {
+  grid-column: 1 / 7;
+}
+
+.give__title {
+  font-size: var(--step-title);
+  text-wrap: balance;
+}
+
+.give__lead p {
+  margin-top: 1.25rem;
+  max-width: 42ch;
+  color: color-mix(in srgb, var(--paper) 88%, var(--marigold));
+}
+
+.give__actions {
+  grid-column: 8 / -1;
+  display: grid;
+  gap: 1rem;
+}
+
+.give .meta {
+  color: color-mix(in srgb, var(--paper) 78%, var(--marigold));
+  border-top: 1px solid color-mix(in srgb, var(--paper) 35%, transparent);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+.give__actions .btn {
+  justify-content: space-between;
+  border-color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
+  width: 100%;
+}
+
+.give__actions .btn:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+.give__actions .btn--outline {
+  background: transparent;
+  color: var(--paper);
+}
+
+.give__actions .btn--outline:hover {
+  background: var(--paper);
+  border-color: var(--paper);
+  color: var(--ink);
+}
+
+.give__note {
+  grid-column: 1 / 7;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.give__note p {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--paper) 80%, var(--marigold));
+}
+
+.give__note a {
+  border-bottom: 1px solid currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Project index — a ledger of work, not a card grid
+   -------------------------------------------------------------------------- */
+
+.index-list {
+  grid-column: 1 / -1;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--rule-strong);
+}
+
+.index-row {
+  display: grid;
+  grid-template-columns: 3.5rem 9rem minmax(0, 1fr) minmax(0, 1.3fr);
+  gap: var(--gutter);
+  align-items: baseline;
+  padding-block: clamp(1.1rem, 2vw, 1.6rem);
+  border-bottom: 1px solid var(--rule);
+  transition: background 0.25s ease;
+}
+
+.index-row:hover {
+  background: color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.index-row__num {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+/* Category as a typographic tag: a rule and a word, no coloured pill. */
+.index-row__cat {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.index-row__cat::before {
+  content: "";
+  width: 1.5rem;
+  height: 2px;
+  flex: none;
+  background: currentColor;
+}
+
+.index-row__cat[data-cat="infrastructure"] {
+  color: var(--marigold);
+}
+.index-row__cat[data-cat="health"] {
+  color: var(--teal);
+}
+.index-row__cat[data-cat="general"] {
+  color: var(--ink-faint);
+}
+
+.index-row__title {
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+  line-height: 1.2;
+  transition: translate 0.25s ease;
+}
+
+.index-row:hover .index-row__title {
+  translate: 4px 0;
+}
+
+.index-row__body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   Team — staggered rectangular portraits, no circular avatars
+   -------------------------------------------------------------------------- */
+
+.team {
+  row-gap: 2rem;
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+.person {
+  grid-column: span 4;
+  margin: 0;
+}
+
+.person:nth-of-type(2) {
+  margin-top: clamp(0rem, 5vw, 4rem);
+}
+
+.person:nth-of-type(3) {
+  margin-top: clamp(0rem, 2.5vw, 2rem);
+}
+
+.person img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: saturate(0.88) contrast(1.03);
+}
+
+.person figcaption {
+  display: grid;
+  gap: 0.25rem;
+  border-top: 1px solid var(--rule-strong);
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+}
+
+.person__name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Contact — hairline fields on paper, no input boxes
+   -------------------------------------------------------------------------- */
+
+.contact {
+  row-gap: clamp(2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.contact__figure {
+  grid-column: 1 / 5;
+  margin: 0;
+}
+
+.contact__figure img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  filter: saturate(0.9) contrast(1.02);
+}
+
+.contact__form {
+  grid-column: 6 / -1;
+}
+
+.field {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 1.6rem;
+}
+
+.field > label {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.field input,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule-strong);
+  padding: 0.6rem 0;
+  transition: border-color 0.2s ease;
+}
+
+.field textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-bottom-color: var(--ink-soft);
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--marigold);
+  border-bottom-width: 2px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: color-mix(in srgb, var(--ink-faint) 70%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Colophon footer
+   -------------------------------------------------------------------------- */
+
+.colophon {
+  border-top: 1px solid var(--rule-strong);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  margin-top: var(--band);
+}
+
+.colophon__inner {
+  row-gap: 2rem;
+  align-items: start;
+}
+
+.colophon__brand {
+  grid-column: 1 / 5;
+}
+
+.colophon__brand p {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.colophon__brand .meta {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+.colophon__col {
+  grid-column: span 3;
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.colophon__col h2 {
+  font-family: var(--font-mono);
+  font-size: var(--step-meta);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.3rem;
+}
+
+.colophon__col a,
+.colophon__col p {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.colophon__col a:hover {
+  color: var(--marigold);
+}
+
+.colophon__legal {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Video
+   -------------------------------------------------------------------------- */
+
+.film {
+  row-gap: 1.5rem;
+}
+
+.film__frame {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+}
+
+.film__frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.film figcaption {
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive
+   The 12-column grid folds down in two steps. Nothing is ever hidden —
+   the offsets and stagger flatten, but all content stays on the page.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 62rem) {
+  .lede__text,
+  .lede__figure,
+  .prose,
+  .pullquote,
+  .focus__figure,
+  .focus__text,
+  .give__lead,
+  .give__actions,
+  .give__note,
+  .contact__figure,
+  .contact__form,
+  .colophon__brand {
+    grid-column: 1 / -1;
+  }
+
+  .lede {
+    align-items: start;
+  }
+
+  .lede__figure img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .focus__figure {
+    margin-top: 0;
+  }
+
+  .focus__figure img {
+    aspect-ratio: 16 / 10;
+  }
+
+  .contact__figure img {
+    aspect-ratio: 16 / 9;
+  }
+
+  .pullquote {
+    border-top-width: 2px;
+  }
+
+  .section-head__title {
+    grid-column: 2 / -1;
+  }
+
+  .section-head__note {
+    grid-column: 2 / -1;
+  }
+
+  .ledger__item {
+    grid-column: span 6;
+  }
+
+  .ledger__item:nth-child(3) {
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .principle {
+    row-gap: 0.75rem;
+  }
+
+  .principle__icon {
+    grid-column: 2 / 4;
+  }
+
+  .principle__title {
+    grid-column: 3 / -1;
+  }
+
+  .principle__body {
+    grid-column: 3 / -1;
+  }
+
+  .plate,
+  .plate--wide,
+  .plate--half {
+    grid-column: span 6;
+  }
+
+  .plate--offset {
+    margin-top: 0;
+  }
+
+  .person {
+    grid-column: span 4;
+  }
+
+  .person:nth-of-type(n) {
+    margin-top: 0;
+  }
+
+  .index-row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    row-gap: 0.5rem;
+  }
+
+  .index-row__cat {
+    grid-column: 2;
+  }
+
+  .index-row__title,
+  .index-row__body {
+    grid-column: 2;
+  }
+
+  .colophon__col {
+    grid-column: span 4;
+  }
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --nav-height: 3.25rem;
+  }
+
+  .masthead__toggle {
+    display: grid;
+  }
+
+  /* Off-canvas panel. Uses visibility rather than display so the
+     transition can run and so focus cannot land in a hidden link. */
+  .masthead__nav {
+    position: fixed;
+    inset: var(--nav-height) 0 auto;
+    background: var(--paper);
+    border-bottom: 1px solid var(--rule-strong);
+    padding: 1rem var(--edge) 2rem;
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -0.75rem;
+    transition:
+      opacity 0.25s ease,
+      translate 0.25s ease,
+      visibility 0.25s;
+  }
+
+  .masthead__nav[data-open] {
+    visibility: visible;
+    opacity: 1;
+    translate: none;
+  }
+
+  .masthead__nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .masthead__nav a {
+    display: block;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-head__num {
+    grid-column: 1 / -1;
+    padding-top: 0;
+  }
+
+  .section-head__title,
+  .section-head__note,
+  .principle__title,
+  .principle__body,
+  .index-row__cat,
+  .index-row__title,
+  .index-row__body {
+    grid-column: 1 / -1;
+  }
+
+  .principle {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    row-gap: 0.85rem;
+  }
+
+  .principle__index {
+    grid-column: 1 / -1;
+  }
+
+  .principle__icon {
+    grid-column: 1 / -1;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+
+  .index-row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .index-row__num {
+    grid-column: 1;
+  }
+
+  .ledger__item,
+  .plate,
+  .plate--wide,
+  .plate--half,
+  .person,
+  .colophon__col {
+    grid-column: 1 / -1;
+  }
+
+  .ledger__item {
+    border-left: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+  }
+
+  .ledger__item:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .prose > p:first-of-type::first-letter {
+    font-size: 3.4em;
+  }
+
+  .dateline {
+    gap: 0.35rem;
+    flex-direction: column;
+  }
+
+  .dateline span::before {
+    content: none;
+    padding-right: 0;
+  }
+
+  .give__actions .btn {
+    justify-content: center;
+  }
+}
